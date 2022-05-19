@@ -4,6 +4,7 @@ import isEmail from 'validator/lib/isEmail'
 import bcrypt from 'bcryptjs'
 import mongoose  from 'mongoose'
 import userModel from '../../models/userModel'
+import jwt from 'jsonwebtoken'
 connectDB();
 
 let name: String;
@@ -14,6 +15,7 @@ let emailAlreadyExists:any;
 
   export default  async function handler(  req: NextApiRequest,  res: NextApiResponse) {
     if(req.method === 'POST'){
+       try{
         name = req.body.user.name;
         email =  req.body.user.email.toLowerCase();
         emailAlreadyExists = await userModel.findOne({email:email})
@@ -47,10 +49,25 @@ let emailAlreadyExists:any;
             console.log(user);
             const newUser = new userModel(user);
             console.log(newUser);
-            await newUser.save()
-            res.status(200).json({...user})
+            await newUser.save();
+            const payload = { userId: newUser._id };
+            jwt.sign(
+              payload,
+              process.env.jwtSecret,
+              { expiresIn: "2d" },
+              (err, token) => {
+                if (err) throw err;
+                res.status(200).json(token);
+              }
+            );
+
      
         }
+       }
+         catch(err){
+         console.log(err);
+         res.status(500).json({msg: 'Server Error'})
+       }
     }
   }
   

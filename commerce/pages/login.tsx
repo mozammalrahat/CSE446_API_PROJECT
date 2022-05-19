@@ -14,8 +14,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { FiberPin } from '@mui/icons-material';
+import { FiberPin, ImportExport } from '@mui/icons-material';
 import { Alert } from '@mui/material';
+import cookie from 'js-cookie';
 
 function Copyright(props: any) {
   return (
@@ -66,6 +67,7 @@ export default function SignIn() {
       user
     })
     .then(res => {
+      cookie.set("token", res.data)
       console.log(res.data);
       Router.push('/');
     })

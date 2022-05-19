@@ -4,6 +4,7 @@ import isEmail from 'validator/lib/isEmail'
 import bcrypt from 'bcryptjs'
 import mongoose  from 'mongoose'
 import userModel from '../../models/userModel'
+import jwt from 'jsonwebtoken'
 connectDB();
 
 let email: String;
@@ -13,6 +14,7 @@ let valid_password:boolean;
 
   export default  async function handler(  req: NextApiRequest,  res: NextApiResponse) {
     if(req.method === 'POST'){
+       try{
         email =  req.body.user.email.toLowerCase();
         let user = await userModel.findOne({email:email})
         console.log(user);
@@ -41,10 +43,23 @@ let valid_password:boolean;
             })
         }
         else{
-            console.log(user);
-            res.status(200).json({...user})
+            const payload = { userId: user._id };
+            jwt.sign(
+              payload,
+              process.env.jwtSecret,
+              { expiresIn: "2d" },
+              (err, token) => {
+                if (err) throw err;
+                res.status(200).json(token);
+              }
+            );
      
         }
+    }
+    catch(err){
+    console.log(err);
+    res.status(500).send('Server Error');
+}
     }
   }
   
