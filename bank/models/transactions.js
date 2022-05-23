@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const transactionsSchema = Schema({
-    transactionId:String,
     fromAccount:String,
     toAccount:String,
     amount:Number,

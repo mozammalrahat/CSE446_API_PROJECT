@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import NextLink from "next/link";
 import dynamic, { LoaderComponent } from "next/dynamic";
 import Image from "next/image";
+import { parseCookies } from "nookies";
+import cookie from "js-cookie";
 import {
   Grid,
   TableContainer,
@@ -23,20 +25,56 @@ import {
 import axios from "axios";
 import { useRouter } from "next/router";
 
+
 const Cart: React.ReactNode = () => {
   const router = useRouter()
-//   const updateCartHandler = async (item: IProduct, quantity: number) => {
-//     const { data } = await axios.get(`/api/products/${item._id}`);
-//     if (data.countInStock < quantity) {
-//       window.alert('Sorry. Product is out of stock');
-//       return;
-//     }
-//     dispatch({ type: actionTypes.CART_ADD_ITEM, payload: { ...item, quantity } });
-//   };
+  const [cartItems, setCartItems] = useState(null);
+  const [update, setUpdate] = useState(false);
+  const updateCartHandler = async (item, quantity) => {
+    // var { data } = await axios.get(`http://localhost:3000/api/products/${item._id}`,
+    // {
+    //   headers: { Authorization: cookie.get("token") },
+    // }
+    // );
+    // console.log(data)
+    // if (data.amount < quantity) {
+    //   window.alert('Sorry. Product is out of stock');
+    //   return;
+    // }
+    if(quantity==1){
+      await axios.put(`http://localhost:3000/api/cart/add/${item.productId._id}/1`,{},
+      {
+        headers: { Authorization: cookie.get("token") },
+      }
+      );
+      setUpdate(!update);
+    }
+    else if(quantity==-1){
+      
+    await axios.put(`http://localhost:3000/api/cart/remove/${item.productId._id}/1`,{},
+    {
+      headers: {Authorization: cookie.get("token")},
+
+    })
+    setUpdate(!update);
+    }
+}
   
-//   const removeItemHandler = (item: IProduct) => {
-//     dispatch({ type: actionTypes.CART_REMOVE_ITEM, payload: item });
-//   };
+  const removeItemHandler = (item: IProduct) => {
+    dispatch({ type: actionTypes.CART_REMOVE_ITEM, payload: item });
+  };
+
+
+
+  useEffect(() => {
+    const getCartItems = async () => {
+      const { data } = await axios.get("http://localhost:3000/api/cart",
+      { headers: { Authorization: cookie.get("token") } });
+      setCartItems(prevCartItems =>data.userCart);
+      }
+    getCartItems();
+
+  }, [update]);
 
   const checkoutHandler = () => {
     router.push('/shipping');
@@ -47,14 +85,14 @@ const Cart: React.ReactNode = () => {
       <Typography component="h1" variant="h1">
         Shopping Cart
       </Typography>
-      {/* {cartItems.length === 0 ? (
+      {(cartItems!==null && cartItems.products.length === 0) ? (
         <div>
           Cart is empty.{' '}
           <NextLink href="/" passHref>
             <Link>Go shopping</Link>
           </NextLink>
         </div>
-      ) : ( */}
+      ) : (
         <Grid container spacing={1}>
           <Grid item md={9} xs={12}>
             <TableContainer>
@@ -68,15 +106,19 @@ const Cart: React.ReactNode = () => {
                     <TableCell align="right">Action</TableCell>
                   </TableRow>
                 </TableHead>
-                {/* <TableBody>
-                  {cartItems.map((item) => (
+                <TableBody>
+                  {cartItems!==null && cartItems.products.map((item) => (
+                    console.log(item),
                     <TableRow key={item._id}>
                       <TableCell>
-                        <NextLink href={`/product/${item.slug}`} passHref>
+                        <NextLink
+                        href="/"
+                        //  href={`/product/${item.slug}`} 
+                         passHref>
                           <Link>
                             <Image
-                              src={item.image}
-                              alt={item.name}
+                              src={item.productId.image}
+                              alt={item.productId.name}
                               width={50}
                               height={50}
                             ></Image>
@@ -85,22 +127,29 @@ const Cart: React.ReactNode = () => {
                       </TableCell>
 
                       <TableCell>
-                        <NextLink href={`/product/${item.slug}`} passHref>
+                        <NextLink
+                        // href="/"
+                        href={`/product/${item.productId._id}`}
+                        passHref>
                           <Link>
-                            <Typography>{item.name}</Typography>
+                            <Typography>{item.productId.name}</Typography>
                           </Link>
                         </NextLink>
                       </TableCell>
                       <TableCell align="right">
-                        <Select value={item.quantity} onChange={(e) =>
-                            updateCartHandler(item, e.target.value as number)
-                          }>
-                          {[...Array(item.countInStock).keys()].map((x) => (
-                            <MenuItem key={x + 1} value={x + 1}>
-                              {x + 1}
-                            </MenuItem>
-                          ))}
-                        </Select>
+                        <Typography>
+                        <Button size="large" variant="text"
+                        onClick={()=>updateCartHandler(item, -1)}
+                        >
+                          -
+                        </Button>
+                          {item.quantity}
+                        <Button
+                        onClick={()=>updateCartHandler(item, 1)}
+                        >
+                          +
+                        </Button>
+                        </Typography>
                       </TableCell>
                       <TableCell align="right">${item.price}</TableCell>
                       <TableCell align="right">
@@ -112,15 +161,15 @@ const Cart: React.ReactNode = () => {
                       </TableCell>
                     </TableRow>
                   ))}
-                </TableBody> */}
+                </TableBody>
               </Table>
             </TableContainer>
           </Grid>
-          {/* <Grid item md={3} xs={12}>
+          <Grid item md={3} xs={12}>
             <Card>
               <List>
                 <ListItem>
-                  <Typography variant="h2">
+                  {/* <Typography variant="h2">
                     Subtotal (
                     {(cartItems as Array<IProduct>).reduce(
                       (a, c) => a + c.quantity,
@@ -131,7 +180,7 @@ const Cart: React.ReactNode = () => {
                       (a, c) => a + c.quantity * c.price,
                       0
                     )}
-                  </Typography>
+                  </Typography> */}
                 </ListItem>
                 <ListItem>
                   <Button variant="contained" color="primary" fullWidth onClick={checkoutHandler}>
@@ -140,10 +189,10 @@ const Cart: React.ReactNode = () => {
                 </ListItem>
               </List>
             </Card>
-          </Grid> */}
+          </Grid>
         </Grid>
-      {/* ) */}
-      {/* } */}
+       ) 
+       } 
     </Layout>
   );
 };

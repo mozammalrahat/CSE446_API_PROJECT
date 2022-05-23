@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { InferGetServerSidePropsType } from "next";
 import NextLink from "next/link";
+import cookie from "js-cookie";
 import Image from "next/image";
 import {
   Grid,
@@ -27,17 +28,36 @@ const ProductDetail = ({
     return <div>Product Not Found</div>;
   }
 
-//   const addToCartHandler = async () => {
-//     const existItem = state.cart.cartItems.find((x) => x._id === product._id);
-//     const quantity = existItem ? existItem.quantity + 1 : 1;
-//     const { data } = await axios.get(`/api/products/${product._id}`);
-//     if (data.countInStock < quantity) {
-//       window.alert("Sorry. Product is out of stock");
-//       return;
-//     }
-//     dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
-//     router.push("/cart");
-//   };
+  const addToCartHandler = async () => {
+    var {data} = await axios.get("http://localhost:3000/api/cart",
+    {
+      headers: { Authorization: cookie.get("token") },
+
+    })
+
+    const cart = data.userCart;
+
+    const existItem = cart && cart.products.find((x) => x.productId === product._id);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+    console.log("This is product id from [id].tsx = ",product._id);
+     var { data } = await axios.get(`http://localhost:3000/api/products/${product._id}`,
+    {
+      headers: { Authorization: cookie.get("token") },
+    }
+    );
+    if (data.countInStock < quantity) {
+      window.alert("Sorry. Product is out of stock");
+      return;
+    }
+    var {data} = await axios.put(`http://localhost:3000/api/cart/add/${product._id}/1`,{},
+    {
+      headers: {Authorization: cookie.get("token")},
+
+    })
+    console.log("This is data from [id].tsx = ",data.cart);
+
+
+};
 
   return (
     <Layout title={product.name} description={product.description}>
@@ -103,7 +123,7 @@ const ProductDetail = ({
                   fullWidth
                   variant="contained"
                   color="primary"
-                //   onClick={addToCartHandler}
+                  onClick={addToCartHandler}
                 >
                   Add to cart
                 </Button>

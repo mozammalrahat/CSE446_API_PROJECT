@@ -3,6 +3,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import authMiddleware from '../../middleware/authMiddleware'
 import userModel from '../../models/userModel';
 import jwt from "jsonwebtoken";
+import connectDb from '../../connectDB';
+connectDb();
 
 const handler=async(  req: NextApiRequest,  res: NextApiResponse)=> {
   if (!req.headers.authorization) {

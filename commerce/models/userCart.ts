@@ -9,18 +9,25 @@ const userCartSchema = new Schema({
         unique: true
     },
     products: [{
-        type: Schema.Types.ObjectId,
+        productId:{type: Schema.Types.ObjectId,
         ref: 'Product',
         required: true,
+        unique: true},
+        price:Number,
+        quantity:Number
     }],
     totalPrice: {
         type: Number,
         required: true,
     },
+    modifiedOn: {
+        type: Date,
+        default: Date.now
+      },
     createdAt: {
         type: Date,
         default: Date.now,
     }  
 });
 
-export default mongoose.model("UserCart", userCartSchema);
+export default mongoose.models.UserCart || mongoose.model("UserCart", userCartSchema);
