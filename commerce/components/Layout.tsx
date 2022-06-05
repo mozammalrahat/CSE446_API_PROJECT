@@ -17,7 +17,7 @@ import Head from "next/head";
 import NextLink from "next/link";
 import React, { useContext } from "react";
 import useStyles from "../utils/styles";
-
+import cookie from "js-cookie";
 interface Props {
   title?: string;
   description?: string;
@@ -30,6 +30,11 @@ interface Props {
 const Layout: React.FC<Props> = ({ title, description, children }) => {
   const router = useRouter();
   
+
+  const logout = () => {
+    cookie.remove("token");
+    router.push("/login");
+  }
   const theme = createTheme({
     typography: {
       h1: {
@@ -60,7 +65,7 @@ const Layout: React.FC<Props> = ({ title, description, children }) => {
     <div>
       <Head>
         <title>
-          {title ? `${title} - Next TS E-commerce` : "Next TS E-commerce"}
+          {title ? `${title} - API Project` : "API Project"}
         </title>
         {description && <meta name="description" content={description}></meta>}
       </Head>
@@ -71,7 +76,7 @@ const Layout: React.FC<Props> = ({ title, description, children }) => {
               <NextLink href="/" passHref>
                 <Link>
                   <Typography className={classes.brand}>
-                    Next TS E-commerce
+                    API PROJECT
                   </Typography>
                 </Link>
               </NextLink>
@@ -126,16 +131,17 @@ const Layout: React.FC<Props> = ({ title, description, children }) => {
                     </Menu>
                   </> */}
                 {/* ) : ( */}
-                  <NextLink href="/login" passHref>
-                    <Link>Login</Link>
-                  </NextLink>
+                <Button onClick={()=>logout()}>
+
+                    <Link>Logout</Link>
+                  </Button>
                 {/* )} */}
               </div>
             </Toolbar>
           </AppBar>
           <Container className={classes.main}>{children!}</Container>
           <footer className={classes.footer}>
-            <Typography>All rights resesrved. Next TS E-commerce</Typography>
+            <Typography>This is a simple API project for course CSE446</Typography>
           </footer>
         </div>
       </ThemeProvider>

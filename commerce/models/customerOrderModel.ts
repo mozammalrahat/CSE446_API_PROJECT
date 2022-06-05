@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const customerOrderSchema = new Schema({
-    customer: {
+    shippingInfo: {
         type: Schema.Types.ObjectId,
-        ref: 'Customer',
+        ref: 'ShippingModel',
         required: true,
     },
     transactionId: {
@@ -12,10 +12,23 @@ const customerOrderSchema = new Schema({
         required: true,
     },
     products: [{
-        type: Schema.Types.ObjectId,
+        productId:{type: Schema.Types.ObjectId,
         ref: 'Product',
         required: true,
+        unique: true},
+        key:String,
+        price:Number,
+        quantity:Number
     }],
+    // [{
+    //     productId:{type: Schema.Types.ObjectId,
+    //         // ref: 'Product',
+    //         unique:false,
+    //     },
+    //         key:String,
+    //         price:Number,
+    //         quantity:Number
+    // }],
     totalPrice: {
         type: Number,
         required: true,
@@ -26,4 +39,4 @@ const customerOrderSchema = new Schema({
     }
 });
 
-export default mongoose.model("CustomerOrder", customerOrderSchema);
+export default mongoose.models.CustomerOrder || mongoose.model("CustomerOrder", customerOrderSchema);

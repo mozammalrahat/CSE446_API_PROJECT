@@ -15,6 +15,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    isShipping: {
+        type: Boolean,
+        default: false,
+    },
     password: {
         type: String,
         required: true,

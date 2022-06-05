@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { InferGetServerSidePropsType } from "next";
 import {
   Card,
@@ -14,6 +14,7 @@ import NextLink from "next/link";
 import Layout from "../components/Layout";
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import cookie from 'js-cookie';
 
 
 const Home = ({products}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
@@ -30,6 +31,26 @@ const Home = ({products}: InferGetServerSidePropsType<typeof getServerSideProps>
   //   dispatch({ type: actionTypes.CART_ADD_ITEM, payload: { ...product, quantity } });
   //   router.push('/cart');
   // };
+
+  useEffect(() => {
+    let user;
+    const getUserDetails = async () => {
+
+    const res = await axios.get('http://localhost:3000/api/auth', {
+          headers: {
+            Authorization: cookie.get('token')
+          }
+        });
+
+      user = res.data.user;
+      console.log(user);
+      if(!user.isShipping){
+        router.push('/address');
+      }
+    }
+    getUserDetails();
+
+  }, []);
 
   return (
     <Layout>

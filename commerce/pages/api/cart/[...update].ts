@@ -33,11 +33,13 @@ const handler=async(  req: NextApiRequest,  res: NextApiResponse)=> {
             console.log("productId",productId);
             const targetProduct = await Product.findById(productId);
             console.log("Cart from line 32",cart);
+            console.log("targetProduct from line 33",targetProduct.key);
             if(!cart){
                 cart = new Cart({
                     user: req.userId,
                     products: [{
                         productId: productId,
+                        key: targetProduct.key,
                         price: targetProduct.price,
                         quantity: quantity
                     }],
@@ -60,6 +62,7 @@ const handler=async(  req: NextApiRequest,  res: NextApiResponse)=> {
             else if(!is_product){
                 cart.products.push({
                     productId: productId,
+                    key: targetProduct.key,
                     price: targetProduct.price,
                     quantity: quantity
                 });

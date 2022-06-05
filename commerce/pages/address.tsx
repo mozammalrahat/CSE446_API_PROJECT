@@ -1,109 +1,203 @@
-import * as React from 'react';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import  React,{useState, useEffect,useRef} from 'react';
+import Router from 'next/router';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import { Alert } from '@mui/material';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import cookie from 'js-cookie';
 
-export default function AddressForm() {
+function Copyright(props: any) {
   return (
-    <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Shipping address
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="firstName"
-            name="firstName"
-            label="First name"
-            fullWidth
-            autoComplete="given-name"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="lastName"
-            name="lastName"
-            label="Last name"
-            fullWidth
-            autoComplete="family-name"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="Address line 1"
-            fullWidth
-            autoComplete="shipping address-line1"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            fullWidth
-            autoComplete="shipping address-line2"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="city"
-            name="city"
-            label="City"
-            fullWidth
-            autoComplete="shipping address-level2"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            id="state"
-            name="state"
-            label="State/Province/Region"
-            fullWidth
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="zip"
-            name="zip"
-            label="Zip / Postal code"
-            fullWidth
-            autoComplete="shipping postal-code"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="country"
-            name="country"
-            label="Country"
-            fullWidth
-            autoComplete="shipping country"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-            label="Use this address for payment details"
-          />
-        </Grid>
-      </Grid>
-    </React.Fragment>
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+
+const theme = createTheme();
+
+export default function SignUp() {
+
+  interface IUser {
+    house: string;
+    street: string;
+    city: string;
+    zip: string;
+    phone: string;
+    account: string;
+    bank_secret: string;
+  }
+  const [shipping, setShipping]  = useState<IUser>({
+    house: '',
+    street: '',
+    city: '',
+    zip:'',
+    phone:'',
+    account:'',
+    bank_secret:''
+  });
+
+  const [error,setError] = useState<string|null>(null);
+
+  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setShipping((prevState: IUser) => ({
+      ...prevState,
+      [name]: value
+    })
+    )
+  };
+
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    await axios.post('http://localhost:3000/api/shipping', {
+      shipping
+    },{
+      headers: {
+        Authorization: cookie.get('token')
+      }
+    })
+    .then(res => {
+      console.log(res.data);
+      Router.push('/');
+    })
+    .catch(err=>{
+      console.log("This is from backend",err.response.data.msg);
+      setError(prev=>err.response.data.msg);
+  } 
+    )};
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Container component="main" >
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ width: 100, height: 100, bgcolor: "secondary.main" }}>
+           <LocalShippingIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Bank Information And Shipping Address 
+          </Typography>
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  name="house"
+                  required
+                  fullWidth
+                  id="house"
+                  label="House No."
+                  autoFocus
+                  onChange={onChangeHandler}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="street"
+                  label="Street Address"
+                  name="street"
+                  autoComplete="street"
+                  onChange={onChangeHandler}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="city"
+                  label="City"
+                  id="city"
+                  autoComplete="city"
+                  onChange={onChangeHandler}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="zip"
+                  label="Zip Code"
+                  id="zip"
+                  autoComplete="zip"
+                  onChange={onChangeHandler}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="phone"
+                  label="Phone"
+                  id="phone"
+                  autoComplete="phone"
+                  onChange={onChangeHandler}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="account"
+                  label="Bank Account"
+                  id="bank"
+                  onChange={onChangeHandler}
+                />
+              </Grid>
+                <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="bank_secret"
+                  label="Bank Secret"
+                  id="bank_secret"
+                  type={'password'}
+                  onChange={onChangeHandler}
+                />
+              </Grid>
+              
+            </Grid>
+            {error!==null && <Alert severity="error">{error}</Alert>}
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              SUBMIT
+            </Button>
+          </Box>
+        </Box>
+        <Copyright sx={{ mt: 5 }} />
+      </Container>
+    </ThemeProvider>
   );
 }

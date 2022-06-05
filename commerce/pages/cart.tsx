@@ -27,9 +27,14 @@ import { useRouter } from "next/router";
 
 
 const Cart: React.ReactNode = () => {
+
+
   const router = useRouter()
   const [cartItems, setCartItems] = useState(null);
   const [update, setUpdate] = useState(false);
+  const [isCheckout, setIsCheckout] = useState(false);
+
+
   const updateCartHandler = async (item, quantity) => {
     // var { data } = await axios.get(`http://localhost:3000/api/products/${item._id}`,
     // {
@@ -76,8 +81,22 @@ const Cart: React.ReactNode = () => {
 
   }, [update]);
 
-  const checkoutHandler = () => {
-    router.push('/shipping');
+  const checkoutHandler = async() => {
+
+    console.log("This is from checkoutHandler")
+    await axios.post("http://localhost:3000/api/order",{}, {
+      headers: { Authorization: cookie.get("token") },
+    }
+    )
+    .then(res => {
+      console.log("The Transaction ID is :", res.data.order.transactionId)
+      // setIsCheckout(true);
+
+    })
+    .catch(err => {
+      console.log(err)
+    })
+    router.push('/');
   };
 
   return (
@@ -183,10 +202,17 @@ const Cart: React.ReactNode = () => {
                   </Typography> */}
                 </ListItem>
                 <ListItem>
-                  <Button variant="contained" color="primary" fullWidth onClick={checkoutHandler}>
+                  <Button disabled = {isCheckout} variant="contained" color="primary" fullWidth onClick={()=>setIsCheckout(true)}>
                     Check Out
                   </Button>
                 </ListItem>
+                { isCheckout && <ListItem>
+                  <Button variant="contained" color="primary" fullWidth onClick={()=>checkoutHandler()}>
+                    Confirm Order
+                  </Button>
+                </ListItem>
+                
+                }
               </List>
             </Card>
           </Grid>

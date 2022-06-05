@@ -13,6 +13,7 @@ const userCartSchema = new Schema({
         ref: 'Product',
         required: true,
         unique: true},
+        key:String,
         price:Number,
         quantity:Number
     }],

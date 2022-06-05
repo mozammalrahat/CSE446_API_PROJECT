@@ -14,19 +14,20 @@ connectDB();
     res.status(200).json(products);
     };
     if(req.method === 'POST'){
-        res.send('this is from the create_product endpoint');
-    const product = new Product({
-        name: 'Product 2',
-        price: 50,
-        description: 'Product 2 description',
-        available: true,
-        amount: 10,
-        image: 'https://res.cloudinary.com/mozammalhossain/image/upload/v1639404146/ch0nzcvzi23gx6xeugar.jpg',
-        category: 'category 2',
+    const product = req.body;
+    const newProduct = new Product({
+        name: product.name,
+        key: product.key,
+        price: product.price,
+        description: product.description,
+        available: product.available,
+        amount: product.amount,
+        image: product.image,
+        category:  product.category,
         createdAt: new Date()
     });
 
-    await product.save((err:any, product:any) => {
+    await newProduct.save((err:any, product:any) => {
         if (err) {
             console.log(err);
         }
@@ -35,7 +36,10 @@ connectDB();
         }
     }
     );
+
+    res.status(200).json(newProduct);
     }
+
 };
 
 export default getProducts;
