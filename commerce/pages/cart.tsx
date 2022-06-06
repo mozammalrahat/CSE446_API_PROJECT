@@ -5,6 +5,7 @@ import dynamic, { LoaderComponent } from "next/dynamic";
 import Image from "next/image";
 import { parseCookies } from "nookies";
 import cookie from "js-cookie";
+import Review from "../components/Review";
 import {
   Grid,
   TableContainer,
@@ -33,6 +34,7 @@ const Cart: React.ReactNode = () => {
   const [cartItems, setCartItems] = useState(null);
   const [update, setUpdate] = useState(false);
   const [isCheckout, setIsCheckout] = useState(false);
+  const [order, setOrder] = useState(null);
 
 
   const updateCartHandler = async (item, quantity) => {
@@ -65,10 +67,6 @@ const Cart: React.ReactNode = () => {
     }
 }
   
-  const removeItemHandler = (item: IProduct) => {
-    dispatch({ type: actionTypes.CART_REMOVE_ITEM, payload: item });
-  };
-
 
 
   useEffect(() => {
@@ -79,7 +77,7 @@ const Cart: React.ReactNode = () => {
       }
     getCartItems();
 
-  }, [update]);
+  }, [update,isCheckout]);
 
   const checkoutHandler = async() => {
 
@@ -89,22 +87,25 @@ const Cart: React.ReactNode = () => {
     }
     )
     .then(res => {
-      console.log("The Transaction ID is :", res.data.order.transactionId)
+      console.log("The order is :", res.data.order)
+      setOrder(res.data.order);
       // setIsCheckout(true);
 
     })
     .catch(err => {
       console.log(err)
     })
-    router.push('/');
+    // router.push('/');
   };
 
   return (
     <Layout title="Shopping Cart">
+      
       <Typography component="h1" variant="h1">
         Shopping Cart
       </Typography>
       {(cartItems!==null && cartItems.products.length === 0) ? (
+        console.log("cart items : ", cartItems),
         <div>
           Cart is empty.{' '}
           <NextLink href="/" passHref>
@@ -188,18 +189,6 @@ const Cart: React.ReactNode = () => {
             <Card>
               <List>
                 <ListItem>
-                  {/* <Typography variant="h2">
-                    Subtotal (
-                    {(cartItems as Array<IProduct>).reduce(
-                      (a, c) => a + c.quantity,
-                      0
-                    )}{" "}
-                    items) : $
-                    {(cartItems as Array<IProduct>).reduce(
-                      (a, c) => a + c.quantity * c.price,
-                      0
-                    )}
-                  </Typography> */}
                 </ListItem>
                 <ListItem>
                   <Button disabled = {isCheckout} variant="contained" color="primary" fullWidth onClick={()=>setIsCheckout(true)}>
@@ -207,18 +196,21 @@ const Cart: React.ReactNode = () => {
                   </Button>
                 </ListItem>
                 { isCheckout && <ListItem>
-                  <Button variant="contained" color="primary" fullWidth onClick={()=>checkoutHandler()}>
+                  <Button disabled={order!==null} variant="contained" color="primary" fullWidth onClick={()=>checkoutHandler()}>
                     Confirm Order
                   </Button>
                 </ListItem>
-                
-                }
+                  } 
               </List>
             </Card>
           </Grid>
         </Grid>
        ) 
        } 
+
+      
+
+       {order && <Review order = {order}/>}
     </Layout>
   );
 };

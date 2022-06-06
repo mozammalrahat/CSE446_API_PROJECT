@@ -1,0 +1,55 @@
+{
+    "username": "Mozammal",
+    "currency": "USD",
+    "balance": 10000,
+    "bank_secret": "MOHpJ2vc",
+    "_id": "6299ca77651d9b8b4a2a5621",
+    "accountNumber": "669e709b-f918-4af0-9f54-a97ad7e30878",
+    "createdAt": "2022-06-03T08:46:47.529Z",
+    "transactions": [],
+    "__v": 0
+}
+{
+    "username": "ecommerce",
+    "currency": "USD",
+    "balance": 1000000,
+    "bank_secret": "yc5xzh5g",
+    "_id": "6299cafd651d9b8b4a2a5626",
+    "accountNumber": "e152d2cb-a81f-4f18-859b-6beae6f02d97",
+    "createdAt": "2022-06-03T08:49:01.818Z",
+    "transactions": [],
+    "__v": 0
+}
+{
+    "username": "supplier",
+    "currency": "USD",
+    "balance": 5500000,
+    "bank_secret": "MRIUBZLS",
+    "_id": "6299cb27651d9b8b4a2a5628",
+    "accountNumber": "d888bcaf-00c7-4fe2-8d18-6f5251864da6",
+    "createdAt": "2022-06-03T08:49:43.841Z",
+    "transactions": [],
+    "__v": 0
+}
+{
+    "username": "piyash",
+    "currency": "USD",
+    "balance": 40000,
+    "bank_secret": "Gzz7SFQa",
+    "_id": "6299cb45651d9b8b4a2a562a",
+    "accountNumber": "bf7fa96e-c113-4bb2-b47c-416f05cfb81d",
+    "createdAt": "2022-06-03T08:50:13.206Z",
+    "transactions": [],
+    "__v": 0
+}
+{
+    "username": "Rahat",
+    "currency": "USD",
+    "balance": 40000,
+    "bank_secret": "VjDIyMcA",
+    "_id": "629e0e02c54886d5924355bc",
+    "accountNumber": "01e1121e-20ad-4c2f-ac9a-ac636027759b",
+    "createdAt": "2022-06-06T14:24:02.628Z",
+    "transactions": [],
+    "__v": 0
+}

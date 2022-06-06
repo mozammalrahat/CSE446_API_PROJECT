@@ -91,6 +91,12 @@ app.get('/products', async (req, res) => {
     res.json(products);
 });
 
+app.get('/product/:id', async (req, res) => {
+    const product = await Product.findById(req.params.id);
+    res.json(product);
+}
+)
+
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

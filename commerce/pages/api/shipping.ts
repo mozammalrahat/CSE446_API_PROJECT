@@ -4,16 +4,18 @@ import shippingModel from '../../models/userShippingModel'
 import jwt from 'jsonwebtoken'
 import userModel from '../../models/userModel';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if(req.method === 'POST'){
-        console.log(req.headers.authorization);
-        if (!req.headers.authorization) {
-        
-        console.log("Unauthorized");
-        return res.status(401).send(`Unauthorized`);
+    if (!req.headers.authorization) {
     
-      }
-      const { userId} = jwt.verify(req.headers.authorization, process.env.jwtSecret);
-        req.userId = userId;
+    console.log("Unauthorized");
+    return res.status(401).send(`Unauthorized`);
+
+  }
+  else{
+    console.log(req.headers.authorization);
+    const { userId} = jwt.verify(req.headers.authorization, process.env.jwtSecret);
+    req.userId = userId;
+
+      if(req.method === 'POST'){
         console.log("User id is ", req.userId);
         try{
             const shipping = req.body.shipping;
@@ -33,5 +35,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(500).send(err);
         }
     }
+
+    if(req.method === 'GET'){
+        try{
+            const userShipping = await shippingModel.findOne({user: req.userId});
+            console.log("User shipping is ",userShipping);
+            return res.status(200).json({ userShipping});
+        }
+        catch(err){
+            console.error(err);
+            return res.status(500).send(err);
+        }
+    }
+
+  }
+    
+
+
 
 }

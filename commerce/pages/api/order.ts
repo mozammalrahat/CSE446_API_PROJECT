@@ -41,13 +41,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         )
 
         
-        console.log("This is from Order.js",transaction.data);
+       
         const transaction_id = transaction.data.newTransaction.transaction_id;
-        console.log("The transaction ID is : ",transaction_id);
-        const userShipping = await userShippingModel.findOne({user: userId});
-        console.log("The Shipping Info is : ",userShipping);
-        console.log("Cart Products",cart.products);
+        const userShipping = await userShippingModel.findOne({user: userId})
         const cartProducts = cart.products;
+
         const productList = cartProducts.map(product => {
             return {
                 productId: product.productId,
@@ -58,9 +56,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
         )
 
-
-        // console.log("Cart Products",cartProducts);
-
         let order = new CustomerOrderModel({
             shippingInfo: userShipping._id,
             transactionId: transaction_id,
@@ -68,7 +63,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             products:[],
 
         });
-        // order.products = productList[0];
+
         productList.forEach((p) => {
             console.log({p})
             order.products.push({
@@ -79,25 +74,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             });
             }
         )
-        // order.products.push({
-        //     productId: productId,
-        //     key: targetProduct.key,
-        //     price: targetProduct.price,
-        //     quantity: quantity
-        // });
 
         try{
-            console.log("Before Saving Order : ",order);
-        // console.log("DEAD", order.products.myProductId);
-        await order.save();
 
-        console.log("After Saving Order : ",order);
-        console.log("After mozo, ", order._id);
+        await order.save();
         order = await CustomerOrderModel.findById(order._id);
-        console.log("The order is : ",order);
-        }catch(err){
+        
+         }
+         catch(err){
+
             console.log("Error in saving order : ",err);
         }
+        
         await axios.post(
             'http://localhost:3002/order',
             {
@@ -117,12 +105,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             }
         )
-
-
+        order = await CustomerOrderModel.findById(order._id).populate({path:'products.productId', model:Product}).populate({path:'shippingInfo', model:userShippingModel});
+        await userCart.deleteOne({user: req.userId});
         res.status(200).json({
             order
         })
 
 
     }
+    if (req.method === 'GET') {
+        const orderList  = await CustomerOrderModel.find({user: req.userId});
+        if(!orderList){
+            return res.status(404).send(`User order not found`);
+        }
+        res.status(200).json({
+            orderList
+        })
+
+}
 }
