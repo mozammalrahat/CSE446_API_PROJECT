@@ -35,37 +35,15 @@ const Header = ({ title, description, children }) => {
 
   return (
     <React.Fragment>
-      <AppBar
-        sx={{
-          background: "white",
-          fontSize: "30px",
-          fontWeight: "bold",
-          color: "black",
-          fontFamily: "Georgia",
-        }}
-      >
+      <AppBar sx={{ background: "#063970" }}>
         <Toolbar>
-          <Link href="/">Icommerce</Link>
+          <Link href="/">ICOMMERCE</Link>
           {isMatch ? (
             <>
               <DrawerComp />
             </>
           ) : (
             <>
-              <Tabs sx={{ marginLeft: "30px", marginTop: "10px" }}>
-                <Link href="/dashboard">
-                  <Tab
-                    label="Dashboard"
-                    sx={{
-                      fontSize: "22px",
-                      fontWeight: "bold",
-                      color: "solid black",
-                      fontFamily: "Georgia",
-                    }}
-                  />
-                </Link>
-              </Tabs>
-
               <Tabs
                 sx={{ marginLeft: "auto" }}
                 indicatorColor="secondary"
@@ -74,59 +52,34 @@ const Header = ({ title, description, children }) => {
                 onChange={(e, value) => setValue(value)}
               >
                 <Link href="/">
-                  <Tab
-                    label="Products"
-                    sx={{
-                      fontSize: "20px",
-                      fontWeight: "bold",
-                      color: "black",
-                      fontFamily: "Georgia",
-                    }}
-                  />
+                  <Tab label="Products" />
                 </Link>
                 <Link href="/cart">
-                  <Tab
-                    label="Cart"
-                    sx={{
-                      fontSize: "20px",
-                      fontWeight: "bold",
-                      color: "black",
-                      fontFamily: "Georgia",
-                    }}
-                  />
+                  <Tab label="Cart" />
                 </Link>
                 <Link href="/account">
-                  <Tab
-                    label="Profile"
-                    sx={{
-                      fontSize: "20px",
-                      fontWeight: "bold",
-                      color: "black",
-                      fontFamily: "Georgia",
-                    }}
-                  />
+                  <Tab label="Profile" />
+                </Link>
+                <Link href="/dashboard">
+                  <Tab label="Dashboard" />
                 </Link>
               </Tabs>
 
               <Stack direction="row" spacing={2}>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <Button
-                  style={{
-                    marginLeft: "10px",
-                    border: " 2px solid #9e0000",
-                    fontSize: "15px",
-                    fontWeight: "1000",
-                    color: "black",
-                    fontFamily: "Georgia",
-                  }}
-                  sx={{}}
-                  onClick={() => logout()}
-                >
-                  Logout
-                </Button>
-                {/* <Button sx={{ marginLeft: "10px" }} variant="contained">
-                  SignUp
-                </Button> */}
+                {router.pathname !== "/login" ? (
+                  <Button
+                    sx={{ marginLeft: "10px" }}
+                    variant="contained"
+                    onClick={() => logout()}
+                  >
+                    Logout
+                  </Button>
+                ) : (
+                  <Button sx={{ marginLeft: "10px" }} variant="contained">
+                    SignUp
+                  </Button>
+                )}
               </Stack>
             </>
           )}
