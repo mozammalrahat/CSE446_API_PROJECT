@@ -67,16 +67,19 @@ const Header = ({ title, description, children }) => {
 
               <Stack direction="row" spacing={2}>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <Button
-                  sx={{ marginLeft: "10px" }}
-                  variant="contained"
-                  onClick={() => logout()}
-                >
-                  Logout
-                </Button>
-                {/* <Button sx={{ marginLeft: "10px" }} variant="contained">
-                  SignUp
-                </Button> */}
+                {router.pathname !== "/login" ? (
+                  <Button
+                    sx={{ marginLeft: "10px" }}
+                    variant="contained"
+                    onClick={() => logout()}
+                  >
+                    Logout
+                  </Button>
+                ) : (
+                  <Button sx={{ marginLeft: "10px" }} variant="contained">
+                    SignUp
+                  </Button>
+                )}
               </Stack>
             </>
           )}

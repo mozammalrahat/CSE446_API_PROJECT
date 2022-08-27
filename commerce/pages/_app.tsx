@@ -13,7 +13,7 @@ import { CacheProvider } from "@emotion/react";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { CssBaseline } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { createEmotionCache } from "../utils/create-emotion-cache";
 import { theme } from "../theme";
 import Navbar from "../components/navbar";
@@ -31,6 +31,8 @@ class MyApp extends App {
     const protectedRoutes =
       ctx.pathname === "/" ||
       ctx.pathname === "/cart" ||
+      ctx.pathname === "/account" ||
+      ctx.pathname === "/dashboard" ||
       ctx.pathname === "/address";
     if (!token) {
       protectedRoutes && redirectUser(ctx, "/login");

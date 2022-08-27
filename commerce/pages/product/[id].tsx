@@ -64,7 +64,9 @@ const ProductDetail = ({
         <div className={classes.section}>
           <NextLink href="/" passHref>
             <Link>
-              <Typography>back to products</Typography>
+              <Button variant="contained" color="primary">
+                Back
+              </Button>
             </Link>
           </NextLink>
         </div>
