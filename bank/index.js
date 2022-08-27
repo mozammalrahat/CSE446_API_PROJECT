@@ -56,6 +56,7 @@ app.post('/bank/create_account', async (req, res) => {
     const newAccount = new Account({
         username: account.username,
         balance: account.balance,
+        email:account.email,
         bank_secret: bank_secret
         });
     await newAccount.save();
@@ -63,8 +64,6 @@ app.post('/bank/create_account', async (req, res) => {
 });
 
 app.post('/bank/create_transaction', async (req, res) => {
-    // res.send("This is from the bank/create_transaction endpoint");
-    console.log(req.body)
     const data =  req.body;
     const bank_secret_frontend = data.bank_secret;
     const from_account = await Account.findOne({accountNumber:data.fromAccount});
@@ -72,25 +71,14 @@ app.post('/bank/create_transaction', async (req, res) => {
 
     if(bank_secret_frontend === from_account_secret){
     
-    
-        // console.log(data);
         const newTransaction = new Transaction({
             fromAccount: data.fromAccount,
             toAccount: data.toAccount,
             amount: data.amount,
-            email:data.email,
             createdAt: new Date()
             });
-        await newTransaction.save()
-        console.log("The new transaction is : ", newTransaction);
-        
-    
-        // const senderAccount = await Account.findOne({accountNumber: "123456789"});
-        // senderAccount.transactions.push(newTransaction);
-        // await senderAccount.save();
-        // const receiverAccount = Account.findOne({accountNumber: "123456789"});
-        // receiverAccount.transactions.push(newTransaction);
-        // await receiverAccount.save();
+        await newTransaction.save();
+        console.log("New Transaction",newTransaction);
         await Account.updateOne({accountNumber: data.fromAccount},{$inc: {balance:-data.amount}}, {$push: {transactions: newTransaction}});
         await Account.updateOne({accountNumber: data.toAccount}, {$inc: {balance:data.amount}}, {$push: {transactions: newTransaction}});
     

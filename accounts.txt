@@ -8,6 +8,7 @@
     "createdAt": "2022-06-03T08:46:47.529Z",
     "transactions": [],
     "__v": 0
+    6309068a84eb4ea2bd0f5e78
 }
 {
     "username": "ecommerce",
@@ -53,3 +54,93 @@
     "transactions": [],
     "__v": 0
 }
+
+{
+    "currency": "USD",
+    "email": "rhossain@gmail.com",
+    "balance": 5000,
+    "bank_secret": "PxBt7mbh",
+    "_id": "63079068ba11e17a46a75a82",
+    "accountNumber": "70c1caf1-64d7-4a81-b197-8bd7d9c9169b",
+    "createdAt": "2022-08-25T15:08:24.208Z",
+    "transactions": [],
+    "__v": 0
+}
+
+Products:
+
+{"_id":{"$oid":"629c62bbf60798144b5aaf6b"},
+"name":"Product 1",
+"key":"1","price":{"$numberInt":"300"},
+"description":"Product 1 Description",
+"available":true,
+"amount":{"$numberInt":"10000"},
+"image":"https://res.cloudinary.com/mozammalhossain/image/upload/v1639404146/ch0nzcvzi23gx6xeugar.jpg",
+"category":"Category 1",
+"createdAt":{"$date":{"$numberLong":"1654416059869"}},
+"__v":{"$numberInt":"0"}}
+
+_id
+:
+629c62d4f60798144b5aaf6d
+name
+:
+"Product 2"
+key
+:
+"2"
+price
+:
+100
+description
+:
+"Product 2 Description"
+available
+:
+true
+amount
+:
+10000
+image
+:
+"https://res.cloudinary.com/mozammalhossain/image/upload/v1639404146/ch..."
+category
+:
+"Category 2"
+createdAt
+:
+2022-06-05T08:01:24.068+00:00
+__v
+:
+0
+
+name
+:
+"Product 3"
+key
+:
+"3"
+price
+:
+150
+description
+:
+"Product 3 Description"
+available
+:
+true
+amount
+:
+10000
+image
+:
+"https://res.cloudinary.com/mozammalhossain/image/upload/v1639404146/ch..."
+category
+:
+"Category 3"
+createdAt
+:
+2022-06-05T08:01:55.555+00:00
+__v
+:
+0

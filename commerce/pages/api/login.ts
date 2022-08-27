@@ -17,7 +17,6 @@ let valid_password:boolean;
        try{
         email =  req.body.user.email.toLowerCase();
         let user = await userModel.findOne({email:email})
-        console.log(user);
         if(user){
             password = req.body.user.password;
             valid_password = await bcrypt.compare(password, user.password);

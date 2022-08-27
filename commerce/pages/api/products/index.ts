@@ -8,9 +8,6 @@ connectDB();
  const getProducts = async (req: NextApiRequest, res: NextApiResponse) => {
     if(req.method === 'GET'){
     const products = await Product.find();
-    products.map(product => {
-        console.log(product.image);
-    });
     res.status(200).json(products);
     };
     if(req.method === 'POST'){

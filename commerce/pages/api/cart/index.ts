@@ -22,9 +22,7 @@ const handler=async(  req: NextApiRequest,  res: NextApiResponse)=> {
   req.userId = userId;
   if(req.method === 'POST'){
     try{
-        // console.log("User cart is", req.data);
-        const cart = req.body;
-        console.log("Cart is", cart);
+        const cart = req.body
         const userCart = new Cart({
             user: req.userId,
             products: {
@@ -33,7 +31,7 @@ const handler=async(  req: NextApiRequest,  res: NextApiResponse)=> {
             totalPrice: cart.totalPrice
         });
         await userCart.save();
-        console.log("User cart is ",userCart);
+       
         return res.status(200).json({ userCart});
     }catch(err){
         console.error(err);
@@ -44,7 +42,7 @@ const handler=async(  req: NextApiRequest,  res: NextApiResponse)=> {
   try{
       const userCart = await Cart.findOne({user:userId}).populate({path:'products.productId', model:Product});
     //   const user = await userModel.findById(userId);
-        console.log("User cart is ",userCart);
+       
       return res.status(200).json({ userCart});
   }catch(err){
       console.error(err);
