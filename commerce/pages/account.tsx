@@ -22,7 +22,7 @@ const Account = (props) => {
           py: 8,
         }}
       >
-        <Container maxWidth="lg">
+        <Container maxWidth="lg" sx={{ marginTop: "50px" }}>
           <Typography sx={{ mb: 3 }} variant="h4">
             Account
           </Typography>
