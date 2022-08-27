@@ -15,7 +15,7 @@ import NextLink from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
 import cookie from "js-cookie";
-import { DashboardLayout } from "../components/dashboard-layout";
+import { Margin } from "@mui/icons-material";
 
 const Home = ({
   products,
@@ -46,20 +46,48 @@ const Home = ({
         {products.map((product) => (
           <Grid item md={4} key={product.name}>
             <NextLink href={`/product/${product._id}`} passHref>
-              <Card style={{ backgroundColor: "#A5C9CA" }}>
+              <Card>
                 <CardActionArea>
                   <CardMedia
+                    style={{
+                      backgroundColor: "#d1d1d1",
+                      border: "2px solid #e2e2e2",
+                    }}
                     component="img"
                     image={product.image}
                     title={product.name}
                   ></CardMedia>
                   <CardContent>
-                    <Typography>{product.name}</Typography>
+                    <Typography
+                      style={{
+                        fontSize: "23px",
+                        fontWeight: "1000",
+                      }}
+                    >
+                      {product.name}
+                    </Typography>
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                  <Typography>${product.price}</Typography>
-                  <Button size="small" color="secondary">
+                  <Typography
+                    style={{
+                      fontSize: "21px",
+                      fontWeight: "1000",
+                      paddingLeft: "8px",
+                      fontFamily: "Georgia",
+                    }}
+                  >
+                    ${product.price}
+                  </Typography>
+                  <Button
+                    size="small"
+                    style={{
+                      fontSize: "15px",
+                      fontWeight: "500",
+                      paddingLeft: "8px",
+                      fontFamily: "Georgia",
+                    }}
+                  >
                     View Detalis
                   </Button>
                 </CardActions>

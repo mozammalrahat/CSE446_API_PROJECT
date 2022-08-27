@@ -123,7 +123,9 @@ const Cart: React.ReactNode = ({ userShippingInfo }) => {
 
   return (
     <Box paddingTop="100px">
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "30px" }}
+      >
         {circularProgress && <CircularProgress />}
       </div>
       <Box>

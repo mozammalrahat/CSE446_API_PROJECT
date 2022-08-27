@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   navbar: {
-    backgroundColor: "#203040",
+    backgroundColor: "#ffff",
     "& a": {
       color: "#ffffff",
       marginLeft: 10,
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     marginTop: "auto",
     textAlign: "center",
-    paddingTop: 20
+    paddingTop: 20,
   },
   section: {
     marginTop: 10,
