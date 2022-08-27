@@ -17,7 +17,7 @@ export const TasksProgress = ({ totalProductOrdered }) => (
           <Typography color="textSecondary" gutterBottom variant="overline">
             TOTAL PRODUCT
           </Typography>
-          <Typography color="textPrimary" variant="h4">
+          <Typography color="textPrimary" variant="h5">
             {totalProductOrdered}
           </Typography>
         </Grid>

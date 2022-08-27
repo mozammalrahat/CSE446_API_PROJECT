@@ -35,15 +35,37 @@ const Header = ({ title, description, children }) => {
 
   return (
     <React.Fragment>
-      <AppBar sx={{ background: "#063970" }}>
+      <AppBar
+        sx={{
+          background: "white",
+          fontSize: "30px",
+          fontWeight: "bold",
+          color: "black",
+          fontFamily: "Georgia",
+        }}
+      >
         <Toolbar>
-          <Link href="/">ICOMMERCE</Link>
+          <Link href="/">Icommerce</Link>
           {isMatch ? (
             <>
               <DrawerComp />
             </>
           ) : (
             <>
+              <Tabs sx={{ marginLeft: "30px", marginTop: "10px" }}>
+                <Link href="/dashboard">
+                  <Tab
+                    label="Dashboard"
+                    sx={{
+                      fontSize: "22px",
+                      fontWeight: "bold",
+                      color: "solid black",
+                      fontFamily: "Georgia",
+                    }}
+                  />
+                </Link>
+              </Tabs>
+
               <Tabs
                 sx={{ marginLeft: "auto" }}
                 indicatorColor="secondary"
@@ -52,16 +74,37 @@ const Header = ({ title, description, children }) => {
                 onChange={(e, value) => setValue(value)}
               >
                 <Link href="/">
-                  <Tab label="Products" />
+                  <Tab
+                    label="Products"
+                    sx={{
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                      color: "black",
+                      fontFamily: "Georgia",
+                    }}
+                  />
                 </Link>
                 <Link href="/cart">
-                  <Tab label="Cart" />
+                  <Tab
+                    label="Cart"
+                    sx={{
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                      color: "black",
+                      fontFamily: "Georgia",
+                    }}
+                  />
                 </Link>
                 <Link href="/account">
-                  <Tab label="Profile" />
-                </Link>
-                <Link href="/dashboard">
-                  <Tab label="Dashboard" />
+                  <Tab
+                    label="Profile"
+                    sx={{
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                      color: "black",
+                      fontFamily: "Georgia",
+                    }}
+                  />
                 </Link>
               </Tabs>
 
@@ -69,8 +112,15 @@ const Header = ({ title, description, children }) => {
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 {router.pathname !== "/login" ? (
                   <Button
-                    sx={{ marginLeft: "10px" }}
-                    variant="contained"
+                    style={{
+                      marginLeft: "10px",
+                      border: " 2px solid #9e0000",
+                      fontSize: "15px",
+                      fontWeight: "1000",
+                      color: "black",
+                      fontFamily: "Georgia",
+                    }}
+                    sx={{}}
                     onClick={() => logout()}
                   >
                     Logout

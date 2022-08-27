@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { destroyCookie, parseCookies } from "nookies";
 import App from "next/app";
-import Router from "next/router";
+import Router, { withRouter } from "next/router";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import NProgress from "nprogress"; //nprogress module
@@ -63,13 +63,23 @@ class MyApp extends App {
 
   render() {
     const { Component, pageProps } = this.props;
-    return (
-      <>
-        <Navbar>
+    console.log(this.props.router.pathname);
+    const pathname = this.props.router.pathname;
+    if (pathname === "/createnewaccount") {
+      return (
+        <>
           <Component {...pageProps} />
-        </Navbar>
-      </>
-    );
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Navbar>
+            <Component {...pageProps} />
+          </Navbar>
+        </>
+      );
+    }
   }
 }
-export default MyApp;
+export default withRouter(MyApp);
