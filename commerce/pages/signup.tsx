@@ -60,11 +60,6 @@ export default function SignUp() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      name: data.get('name'),
-      email: data.get('email'),
-      password: data.get('password'),
-    });
 
     await axios.post('http://localhost:3000/api/register', {
       user
@@ -74,7 +69,6 @@ export default function SignUp() {
       Router.push('/login');
     })
     .catch(err=>{
-      console.log("This is from backend",err.response.data.msg);
       setError(prev=>err.response.data.msg);
   } 
     )};

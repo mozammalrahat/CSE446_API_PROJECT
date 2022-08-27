@@ -77,11 +77,9 @@ export default function SignUp() {
       }
     })
     .then(res => {
-      console.log(res.data);
       Router.push('/');
     })
     .catch(err=>{
-      console.log("This is from backend",err.response.data.msg);
       setError(prev=>err.response.data.msg);
   } 
     )};

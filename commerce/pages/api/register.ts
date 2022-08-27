@@ -46,9 +46,7 @@ let emailAlreadyExists:any;
                     password
                 }
             user.password = await bcrypt.hash(password, 10);
-            console.log(user);
             const newUser = new userModel(user);
-            console.log(newUser);
             await newUser.save();
             const payload = { userId: newUser._id };
             jwt.sign(

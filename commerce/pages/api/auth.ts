@@ -10,7 +10,6 @@ const handler=async(  req: NextApiRequest,  res: NextApiResponse)=> {
   if (!req.headers.authorization) {
     return res.status(401).send(`Unauthorized`);
   }
-  console.log(req.headers.authorization);
   const { userId } = jwt.verify(req.headers.authorization, process.env.jwtSecret);
   req.userId = userId;
   try{

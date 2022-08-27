@@ -15,6 +15,7 @@ const accountSchema = Schema({
     email:String,
     balance:Number,
     createdAt:{type:Date, default:Date.now},
+    
     transactions:[{
         id:{type:Schema.Types.ObjectId, ref:"Transactions"}
 }],
