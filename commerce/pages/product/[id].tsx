@@ -64,7 +64,18 @@ const ProductDetail = ({
         <div className={classes.section}>
           <NextLink href="/" passHref>
             <Link>
-              <Typography>back to products</Typography>
+              <Button
+                style={{
+                  marginBottom: "20px",
+                  border: " 2px solid #6fbf86",
+                  fontSize: "15px",
+                  fontWeight: "1000",
+                  color: "black",
+                  fontFamily: "Georgia",
+                }}
+              >
+                back to products
+              </Button>
             </Link>
           </NextLink>
         </div>
@@ -73,12 +84,12 @@ const ProductDetail = ({
             <Image
               src={product.image}
               alt={product.name}
-              width={640}
-              height={640}
+              width={2920}
+              height={2100}
               layout="responsive"
             ></Image>
           </Grid>
-          <Grid item md={3} xs={12}>
+          <Grid item md={6} xs={12}>
             <List>
               <ListItem>
                 <Typography component="h6" variant="h6">
@@ -93,7 +104,7 @@ const ProductDetail = ({
               </ListItem>
             </List>
           </Grid>
-          <Grid item md={3} xs={12}>
+          <Grid item md={12} xs={6} style={{ marginLeft: "550px" }}>
             <Card>
               <List>
                 <ListItem>
