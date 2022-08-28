@@ -71,8 +71,8 @@ const ProductDetail = ({
             <Image
               src={product.image}
               alt={product.name}
-              width={2920}
-              height={2100}
+              width={6}
+              height={4}
               layout="responsive"
               style={{ padding: "20px", marginRight: "20px" }}
             ></Image>
