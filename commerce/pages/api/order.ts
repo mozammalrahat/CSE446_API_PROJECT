@@ -32,7 +32,18 @@ export default async function handler(
     }
     const user_account = await userShippingModel.findOne({ user: req.userId });
     const user_account_number = user_account.account;
+    const myAccount = await axios.get(
+      `http://localhost:3001/bank/accounts/${user_account_number}`
+    );
+    const myBalance = myAccount.data.accountDetails.balance;
     const totalPrice = cart.totalPrice;
+    if (myBalance < totalPrice) {
+      return res.status(405).send(
+        {
+          message: "Insufficient Balance"
+        }
+      );
+    }
     const transaction = await axios.post(
       "http://localhost:3001/bank/create_transaction",
       {
