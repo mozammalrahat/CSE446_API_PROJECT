@@ -27,7 +27,7 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { Box } from "@mui/material";
+import { Alert, Box } from "@mui/material";
 import { Step, StepLabel, Stepper } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
@@ -42,38 +42,55 @@ const Cart: React.ReactNode = ({ userShippingInfo }) => {
   const [order, setOrder] = useState(null);
   const [iscConfirmOrder, setIsConfirmOrder] = useState(false);
   const [circularProgress, setCircularProgress] = useState(false);
+  const [error, setError] = useState(null);
+  const [isError, setisError] = useState(false);
 
   const updateCartHandler = async (item, quantity) => {
     setCircularProgress(true);
     if (quantity == 1) {
-      await axios.put(
-        `http://localhost:3000/api/cart/add/${item.productId._id}/1`,
-        {},
-        {
-          headers: { Authorization: cookie.get("token") },
-        }
-      );
+      await axios
+        .put(
+          `http://localhost:3000/api/cart/add/${item.productId._id}/1`,
+          {},
+          {
+            headers: { Authorization: cookie.get("token") },
+          }
+        )
+        .then((res) => {})
+        .catch((err) => {
+          setError(err);
+          setisError(true);
+        });
       setUpdate(!update);
     } else if (quantity == -1) {
-      await axios.put(
-        `http://localhost:3000/api/cart/remove/${item.productId._id}/1`,
-        {},
-        {
-          headers: { Authorization: cookie.get("token") },
-        }
-      );
+      await axios
+        .put(
+          `http://localhost:3000/api/cart/remove/${item.productId._id}/1`,
+          {},
+          {
+            headers: { Authorization: cookie.get("token") },
+          }
+        )
+        .then((res) => {})
+        .catch((err) => {
+          setError(err);
+          setisError(true);
+        });
       setUpdate(!update);
     }
     setCircularProgress(false);
   };
   const deleteCartItemHandler = async (item) => {
     setCircularProgress(true);
-    await axios.delete(
-      `http://localhost:3000/api/cart/add/${item.productId._id}`,
-      {
+    await axios
+      .delete(`http://localhost:3000/api/cart/add/${item.productId._id}`, {
         headers: { Authorization: cookie.get("token") },
-      }
-    );
+      })
+      .then((res) => {})
+      .catch((err) => {
+        setError(err);
+        setisError(true);
+      });
     setUpdate(!update);
     setCircularProgress(false);
   };
@@ -81,9 +98,14 @@ const Cart: React.ReactNode = ({ userShippingInfo }) => {
   useEffect(() => {
     setCircularProgress(true);
     const getCartItems = async () => {
-      const { data } = await axios.get("http://localhost:3000/api/cart", {
-        headers: { Authorization: cookie.get("token") },
-      });
+      const { data } = await axios
+        .get("http://localhost:3000/api/cart", {
+          headers: { Authorization: cookie.get("token") },
+        })
+        .catch((err) => {
+          setError(err);
+          setisError(true);
+        });
       setCartItems((prevCartItems) => data.userCart);
     };
     getCartItems();
@@ -115,7 +137,9 @@ const Cart: React.ReactNode = ({ userShippingInfo }) => {
         // setIsCheckout(true);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data.message);
+        setError(err.response.data.message);
+        setisError(true);
       });
     // router.push('/');
     setCircularProgress(false);
@@ -300,8 +324,10 @@ const Cart: React.ReactNode = ({ userShippingInfo }) => {
               </Grid>
             </Grid>
           )}
-
-          {order && <Review order={order} />}
+          <>
+            {isError && <Alert severity="error">{error}</Alert>}
+            {!isError && order && <Review order={order} />}
+          </>
         </Box>
       )}
     </Box>
