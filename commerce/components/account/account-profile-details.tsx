@@ -153,6 +153,10 @@ export const AccountProfileDetails = ({ userShippingInfo }) => {
           <Button
             color="primary"
             variant="contained"
+            style={{
+              color: "#f8f5dbed",
+              backgroundColor: "black",
+            }}
             onClick={() => handleShippingInfo()}
           >
             Save details
