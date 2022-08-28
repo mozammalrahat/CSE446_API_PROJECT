@@ -17,7 +17,7 @@ export const Budget = ({ totalOrders }) => (
           <Typography color="textSecondary" gutterBottom variant="overline">
             Total Orders
           </Typography>
-          <Typography color="textPrimary" variant="h4">
+          <Typography color="textPrimary" variant="h5">
             {totalOrders}
           </Typography>
         </Grid>

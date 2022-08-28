@@ -11,7 +11,7 @@ import {
   Button,
 } from "@material-ui/core";
 import NextLink from "next/link";
-import Layout from "../components/Layout";
+
 import axios from "axios";
 import { useRouter } from "next/router";
 import cookie from "js-cookie";
@@ -21,19 +21,6 @@ const Home = ({
   products,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
-
-  // const addToCartHandler = async (product: IProduct) => {
-  //   const existItem = state.cart.cartItems.find((x) => x._id === product._id);
-  //   const quantity = existItem ? existItem.quantity + 1 : 1;
-  //   const { data } = await axios.get(`/api/products/${product._id}`);
-  //   if (data.countInStock < quantity) {
-  //     window.alert('Sorry. Product is out of stock');
-  //     return;
-  //   }
-  //   dispatch({ type: actionTypes.CART_ADD_ITEM, payload: { ...product, quantity } });
-  //   router.push('/cart');
-  // };
-
   useEffect(() => {
     let user;
     const getUserDetails = async () => {
@@ -54,6 +41,7 @@ const Home = ({
   return (
     <>
       <h1>Products</h1>
+      <br />
       <Grid container spacing={3}>
         {products.map((product) => (
           <Grid item md={4} key={product.name}>
@@ -113,6 +101,7 @@ const Home = ({
   );
 };
 
+Home.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 export default Home;
 
 export async function getServerSideProps() {

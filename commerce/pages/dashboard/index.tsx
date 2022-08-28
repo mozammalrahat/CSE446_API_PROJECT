@@ -11,8 +11,9 @@ import { TrafficByDevice } from "../../components/dashboard/traffic-by-device";
 import { DashboardLayout } from "../../components/dashboard-layout";
 import axios from "axios";
 import { parseCookies } from "nookies";
+import { AccountBalance } from "../../components/dashboard/accountBalance";
 
-const Dashboard = ({ orders }) => {
+const Dashboard = ({ orders, bankInformation }) => {
   let totalCost = 0;
   let totalProductOrdered = 0;
   let recentProducts = orders[0].products;
@@ -40,7 +41,7 @@ const Dashboard = ({ orders }) => {
         }}
       >
         <Container maxWidth={false}>
-          <Grid container spacing={3}>
+          <Grid paddingTop="30px" container spacing={3}>
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <Budget totalOrders={totalOrders} />
             </Grid>
@@ -49,6 +50,12 @@ const Dashboard = ({ orders }) => {
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <TotalProfit totalCost={totalCost} sx={{ height: "100%" }} />
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <AccountBalance
+                bankInformation={bankInformation}
+                sx={{ height: "100%" }}
+              />
             </Grid>
             <Grid item lg={8} md={12} xl={9} xs={12}>
               <Sales />
@@ -77,12 +84,26 @@ export default Dashboard;
 
 export async function getServerSideProps(context) {
   const { token } = parseCookies(context);
-  const response = await axios.get("http://localhost:3000/api/order", {
+  const orderResponse = await axios.get("http://localhost:3000/api/order", {
     headers: { Authorization: token },
   });
+  const shippingResponse = await axios.get(
+    "http://localhost:3000/api/shipping",
+    {
+      headers: { Authorization: token },
+    }
+  );
+  // console.log(shippingResponse.data);
+  const account = shippingResponse.data.userShipping.account;
+  const bankResponse = await axios.get(
+    `http://localhost:3001/bank/accounts/${account}`,
+    {}
+  );
+  console.log(bankResponse.data);
   return {
     props: {
-      orders: response.data.orderList,
+      orders: orderResponse.data.orderList,
+      bankInformation: bankResponse.data.accountDetails,
     },
   };
 }

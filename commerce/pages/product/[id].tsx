@@ -64,18 +64,7 @@ const ProductDetail = ({
         <div className={classes.section}>
           <NextLink href="/" passHref>
             <Link>
-              <Button
-                style={{
-                  marginBottom: "20px",
-                  border: " 2px solid #6fbf86",
-                  fontSize: "15px",
-                  fontWeight: "1000",
-                  color: "black",
-                  fontFamily: "Georgia",
-                }}
-              >
-                back to products
-              </Button>
+
             </Link>
           </NextLink>
         </div>

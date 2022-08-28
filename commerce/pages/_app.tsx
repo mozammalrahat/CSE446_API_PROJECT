@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { destroyCookie, parseCookies } from "nookies";
 import App from "next/app";
-import Router from "next/router";
+import Router, { withRouter } from "next/router";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import NProgress from "nprogress"; //nprogress module
@@ -13,7 +13,7 @@ import { CacheProvider } from "@emotion/react";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { CssBaseline } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { createEmotionCache } from "../utils/create-emotion-cache";
 import { theme } from "../theme";
 import Navbar from "../components/navbar";
@@ -31,6 +31,8 @@ class MyApp extends App {
     const protectedRoutes =
       ctx.pathname === "/" ||
       ctx.pathname === "/cart" ||
+      ctx.pathname === "/account" ||
+      ctx.pathname === "/dashboard" ||
       ctx.pathname === "/address";
     if (!token) {
       protectedRoutes && redirectUser(ctx, "/login");
@@ -61,13 +63,23 @@ class MyApp extends App {
 
   render() {
     const { Component, pageProps } = this.props;
-    return (
-      <>
-        <Navbar>
+    console.log(this.props.router.pathname);
+    const pathname = this.props.router.pathname;
+    if (pathname === "/createnewaccount") {
+      return (
+        <>
           <Component {...pageProps} />
-        </Navbar>
-      </>
-    );
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Navbar>
+            <Component {...pageProps} />
+          </Navbar>
+        </>
+      );
+    }
   }
 }
-export default MyApp;
+export default withRouter(MyApp);
