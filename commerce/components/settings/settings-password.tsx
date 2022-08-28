@@ -112,3 +112,5 @@ const SettingsPassword = (props) => {
     </>
   );
 };
+
+export default SettingsPassword;
