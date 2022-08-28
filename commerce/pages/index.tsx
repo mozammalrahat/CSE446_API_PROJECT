@@ -52,6 +52,7 @@ const Home = ({
                     style={{
                       backgroundColor: "#d1d1d1",
                       border: "2px solid #e2e2e2",
+                      height: "220px",
                     }}
                     component="img"
                     image={product.image}
