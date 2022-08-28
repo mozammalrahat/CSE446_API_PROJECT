@@ -6,7 +6,8 @@ import { DashboardLayout } from "../components/dashboard-layout";
 import axios from "axios";
 import { parseCookies } from "nookies";
 import { useState } from "react";
-import { SettingsPassword } from "../components/settings/settings-password";
+import SettingsPassword from "../components/settings/settings-password";
+
 const Account = (props) => {
   const [user, setUser] = useState(props.user);
   const [userShippingInfo, setShippingInfo] = useState(props.userShippingInfo);
