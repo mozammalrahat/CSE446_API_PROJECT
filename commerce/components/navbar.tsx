@@ -36,12 +36,14 @@ const Header = ({ title, description, children }) => {
   return (
     <React.Fragment>
       <AppBar
-        sx={{
-          background: "white",
+        style={{
+          backgroundColor: "black",
           fontSize: "30px",
           fontWeight: "bold",
-          color: "black",
+          color: "#f8f5dbed",
           fontFamily: "Georgia",
+          paddingTop: "10px",
+          paddingBottom: "10px",
         }}
       >
         <Toolbar>
@@ -117,8 +119,9 @@ const Header = ({ title, description, children }) => {
                       border: " 2px solid #9e0000",
                       fontSize: "15px",
                       fontWeight: "1000",
-                      color: "black",
+                      color: "#f8f5dbed",
                       fontFamily: "Georgia",
+                      backgroundColor: "black",
                     }}
                     sx={{}}
                     onClick={() => logout()}

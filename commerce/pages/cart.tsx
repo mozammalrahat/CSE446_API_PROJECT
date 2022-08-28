@@ -249,7 +249,10 @@ const Cart: React.ReactNode = ({ userShippingInfo }) => {
                         <Button
                           disabled={isCheckout}
                           variant="contained"
-                          color="primary"
+                          style={{
+                            color: "#f8f5dbed",
+                            backgroundColor: "black",
+                          }}
                           fullWidth
                           // onClick={() => setIsCheckout(true)}
                           onClick={() => shipmentHandler()}
@@ -261,6 +264,10 @@ const Cart: React.ReactNode = ({ userShippingInfo }) => {
                     {isShipmentConfirmed && !isCheckout && (
                       <ListItem>
                         <Button
+                          style={{
+                            color: "#f8f5dbed",
+                            backgroundColor: "black",
+                          }}
                           disabled={order !== null}
                           variant="contained"
                           color="primary"
@@ -274,6 +281,10 @@ const Cart: React.ReactNode = ({ userShippingInfo }) => {
                     {isCheckout && (
                       <ListItem>
                         <Button
+                          style={{
+                            color: "#f8f5dbed",
+                            backgroundColor: "black",
+                          }}
                           disabled={order !== null}
                           variant="contained"
                           color="primary"
