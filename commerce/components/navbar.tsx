@@ -61,7 +61,8 @@ const Header = ({ title, description, children }) => {
                     sx={{
                       fontSize: "22px",
                       fontWeight: "bold",
-                      color: "solid black",
+                      backgroundColor: "black",
+                      color: "#f8f5dbed",
                       fontFamily: "Georgia",
                     }}
                   />
@@ -81,7 +82,8 @@ const Header = ({ title, description, children }) => {
                     sx={{
                       fontSize: "20px",
                       fontWeight: "bold",
-                      color: "black",
+                      backgroundColor: "black",
+                      color: "#f8f5dbed",
                       fontFamily: "Georgia",
                     }}
                   />
@@ -92,7 +94,8 @@ const Header = ({ title, description, children }) => {
                     sx={{
                       fontSize: "20px",
                       fontWeight: "bold",
-                      color: "black",
+                      backgroundColor: "black",
+                      color: "#f8f5dbed",
                       fontFamily: "Georgia",
                     }}
                   />
@@ -103,7 +106,8 @@ const Header = ({ title, description, children }) => {
                     sx={{
                       fontSize: "20px",
                       fontWeight: "bold",
-                      color: "black",
+                      backgroundColor: "black",
+                      color: "#f8f5dbed",
                       fontFamily: "Georgia",
                     }}
                   />
@@ -122,6 +126,7 @@ const Header = ({ title, description, children }) => {
                       color: "#f8f5dbed",
                       fontFamily: "Georgia",
                       backgroundColor: "black",
+                      
                     }}
                     sx={{}}
                     onClick={() => logout()}
