@@ -63,12 +63,10 @@ const ProductDetail = ({
       <Navbar title={product.name} description={product.description}>
         <div className={classes.section}>
           <NextLink href="/" passHref>
-            <Link>
-
-            </Link>
+            <Link></Link>
           </NextLink>
         </div>
-        <Grid container spacing={1}>
+        <Grid container spacing={1} style={{ paddingTop: "40px" }}>
           <Grid item md={6} xs={12}>
             <Image
               src={product.image}
@@ -76,6 +74,7 @@ const ProductDetail = ({
               width={2920}
               height={2100}
               layout="responsive"
+              style={{ padding: "20px", marginRight: "20px" }}
             ></Image>
           </Grid>
           <Grid item md={6} xs={12}>
