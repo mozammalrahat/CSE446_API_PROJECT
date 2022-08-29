@@ -20,6 +20,7 @@ import { useRouter } from "next/router";
 import MuiLink from "@mui/material/Link";
 import useStyles from "../utils/styles";
 import StickyFooter from "./footer";
+import Footer from "./footer";
 const Header = ({ title, description, children }) => {
   const router = useRouter();
   const [value, setValue] = useState(0);
@@ -128,13 +129,12 @@ const Header = ({ title, description, children }) => {
                   <Button
                     style={{
                       marginLeft: "10px",
-                      border: " 2px solid #9e0000",
+                      border: " 2px solid white",
                       fontSize: "15px",
                       fontWeight: "1000",
                       color: "#f8f5dbed",
                       fontFamily: "Georgia",
                       backgroundColor: "black",
-                      
                     }}
                     sx={{}}
                     onClick={() => logout()}
@@ -142,7 +142,19 @@ const Header = ({ title, description, children }) => {
                     Logout
                   </Button>
                 ) : (
-                  <Button sx={{ marginLeft: "10px" }} variant="contained">
+                  <Button
+                    style={{
+                      marginLeft: "10px",
+                      border: " 2px solid white",
+                      fontSize: "15px",
+                      fontWeight: "1000",
+                      color: "#f8f5dbed",
+                      fontFamily: "Georgia",
+                      backgroundColor: "black",
+                    }}
+                    sx={{ marginLeft: "10px" }}
+                    variant="contained"
+                  >
                     SignUp
                   </Button>
                 )}
@@ -152,6 +164,7 @@ const Header = ({ title, description, children }) => {
         </Toolbar>
       </AppBar>
       <Container>{children!}</Container>
+
       <StickyFooter />
     </React.Fragment>
   );
