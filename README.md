@@ -1,4 +1,4 @@
-# CSE446_API_PROJECT
+# CSE446 API PROJECT (ECOMMERCE)
 ## Introduction
 
 This full-stack e-commerce web application was developed by us for our CSE446 course project. In this case, we had to simulate e-commerce features between the various organizations. The project demonstration requires us to take into account three various organizations. The first organization is an e-commerce website that sells goods to end users. The second is a backend product supplier that provides goods to the e-commerce website. The third organization is a bank that facilitates transactions between other businesses and clients.
