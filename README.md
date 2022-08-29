@@ -42,13 +42,13 @@ nodemon index.js    // This will run our local bank server(backend) on port: htt
 ```
 After that we have to configure the Supplier server. Again we have to do the same thing.
 ```sh
-cd supplier             // Go to bank directory
+cd supplier         // Go to bank directory
 npm install         // It will install all dependency from package.json file
 nodemon index.js    // This will run our local supplier(backend) server on port: http://localhost:3002/
 ```
 After successfully run two server we have to configure the Ecommerce server. The first two servers have been developed by Express.js but The third one ecommerce have been developed using NextJS. To setup this organisation we have to execute the following command
 ```sh
-cd commerce             // Go to bank directory
+cd commerce         // Go to bank directory
 npm install         // It will install all dependency from package.json file
-npm run dev    // This will run our local ecommerce NextJS both front-end and back-end server on port: http://localhost:3000/
+npm run dev         // This will run our local ecommerce NextJS both front-end and back-end server on port: http://localhost:3000/
 ```
