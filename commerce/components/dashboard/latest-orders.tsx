@@ -28,6 +28,7 @@ export const LatestOrders = ({ allOrders, user }) => {
   const [openOrderId, setOpenOrderId] = useState(null);
   const [orders, setOrders] = useState(allOrders);
   const [changeOrder, setChangeOrder] = useState(allOrders[0]);
+  console.log("Orders : ", orders);
 
   const handleStatus = async (orderId, action) => {
     await axios
@@ -43,14 +44,16 @@ export const LatestOrders = ({ allOrders, user }) => {
   };
 
   useEffect(() => {
-    setOrders((prevOrders) => {
-      orders.forEach((order) => {
-        if (order._id === changeOrder._id) {
-          order = { ...changeOrder };
+    const getAllOrders = async () => {
+      const ordersResponse = await axios.get(
+        "http://localhost:3000/api/orders",
+        {
+          headers: { Authorization: cookie.get("token") },
         }
-      });
-      return [...orders];
-    });
+      );
+      setOrders((prev) => ordersResponse.data.orders);
+    };
+    getAllOrders();
   }, [changeOrder]);
 
   return (
@@ -88,6 +91,10 @@ export const LatestOrders = ({ allOrders, user }) => {
                     <Link href={`/dashboard/vieworder/${order._id}`}>
                       <a target="_blank" rel="noopener noreferrer">
                         <Button
+                         style={{
+                          color: "#f8f5dbed",
+                          backgroundColor: "black",
+                        }}
                           size="small"
                           variant="contained"
                           // onClick={() => handleOrderView(order._id)}
@@ -104,6 +111,7 @@ export const LatestOrders = ({ allOrders, user }) => {
                           onClick={() => handleStatus(order._id, "accept")}
                           size="small"
                           variant="contained"
+                          
                         >
                           Accept
                         </Button>
@@ -123,20 +131,21 @@ export const LatestOrders = ({ allOrders, user }) => {
                     )}
                   </TableCell>
                   <TableCell>
-                    {!order.delivered && user.userType === "admin" ? (
-                      <Button
-                        onClick={() => handleStatus(order._id, "delivered")}
-                        size="small"
-                        variant="contained"
-                      >
-                        Confirm Delivery
-                      </Button>
+                    {!order.delivered ? (
+                      user.userType === "admin" ? (
+                        <Button
+                          onClick={() => handleStatus(order._id, "delivered")}
+                          size="small"
+                          variant="contained"
+                        >
+                          Confirm Delivery
+                        </Button>
+                      ) : (
+                        "Processing"
+                      )
                     ) : (
-                      ""
+                      "Delivered"
                     )}
-                    {user.userType === "customer" && order.delivered === true
-                      ? "Delivered"
-                      : "Processing"}
                   </TableCell>
                 </TableRow>
               ))}

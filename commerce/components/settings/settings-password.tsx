@@ -100,7 +100,10 @@ const SettingsPassword = (props) => {
             }}
           >
             <Button
-              color="primary"
+              style={{
+                color: "#f8f5dbed",
+                backgroundColor: "black",
+              }}
               variant="contained"
               onClick={() => handleNewPassword()}
             >
