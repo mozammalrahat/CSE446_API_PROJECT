@@ -105,6 +105,7 @@ const SettingsPassword = (props) => {
                 backgroundColor: "black",
               }}
               variant="contained"
+              style={{ backgroundColor: "black", color: "#f8f5dbed" }}
               onClick={() => handleNewPassword()}
             >
               Update

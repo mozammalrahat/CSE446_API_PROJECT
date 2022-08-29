@@ -134,6 +134,7 @@ const Header = ({ title, description, children }) => {
                       color: "#f8f5dbed",
                       fontFamily: "Georgia",
                       backgroundColor: "black",
+                      
                     }}
                     sx={{}}
                     onClick={() => logout()}

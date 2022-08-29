@@ -66,14 +66,15 @@ const ProductDetail = ({
             <Link></Link>
           </NextLink>
         </div>
-        <Grid container spacing={1}>
+        <Grid container spacing={1} style={{ paddingTop: "40px" }}>
           <Grid item md={6} xs={12}>
             <Image
               src={product.image}
               alt={product.name}
-              width={2920}
-              height={2100}
+              width={6}
+              height={4}
               layout="responsive"
+              style={{ padding: "20px", marginRight: "20px" }}
             ></Image>
           </Grid>
           <Grid item md={6} xs={12}>
