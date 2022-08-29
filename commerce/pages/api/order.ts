@@ -38,11 +38,9 @@ export default async function handler(
     const myBalance = myAccount.data.accountDetails.balance;
     const totalPrice = cart.totalPrice;
     if (myBalance < totalPrice) {
-      return res.status(405).send(
-        {
-          message: "Insufficient Balance"
-        }
-      );
+      return res.status(405).send({
+        message: "Insufficient Balance",
+      });
     }
     const transaction = await axios.post(
       "http://localhost:3001/bank/create_transaction",
@@ -115,12 +113,14 @@ export default async function handler(
     });
   }
   if (req.method === "GET") {
-    const orderList = await CustomerOrderModel.find({ user: userId });
-    if (!orderList) {
+    const orders = await CustomerOrderModel.find({ user: userId })
+      .populate({ path: "products.productId", model: Product })
+      .populate({ path: "shippingInfo", model: userShippingModel });
+    if (!orders) {
       return res.status(404).send(`User order not found`);
     }
     res.status(200).json({
-      orderList,
+      orders,
     });
   }
 }

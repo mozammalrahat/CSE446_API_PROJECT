@@ -48,6 +48,7 @@ class MyApp extends App {
           },
         });
         const { user } = res.data;
+        // console.log("User data is : ", user);
         pageProps = {
           ...pageProps,
           user,
