@@ -26,10 +26,7 @@ This full-stack e-commerce web application was developed by us for our CSE446 co
 - Prettier
 
 ## Installation
-To run this project in our local machine at first we have to clone the repository
-To clone the project into our local machine at first we have to check if we have git already installed in our local machine. If we don't have git we can install it from this [website](https://git-scm.com/downloads) and also can configure it according to instruction given there.
-After configuring git successfully, Now we can clone the project in a suitable directory of our local machine.
-For cloning the project we have to give the following command
+We must first clone the repository in order to run this project locally. Before we can clone the code into our local system, we must first determine whether git is already installed there. If we don't already have git, we can get it from this [website](https://git-scm.com/downloads) and set it up using the instructions provided. We can now clone the project in an appropriate directory on our local system after properly configuring git. We have to execute the following command to clone the project.
 
 ```sh
 git clone https://github.com/mozammalrahat/CSE446_API_PROJECT.git
