@@ -27,7 +27,7 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { Alert, Box } from "@mui/material";
+import { Stack, Alert, AlertTitle, Box } from "@mui/material";
 import { Step, StepLabel, Stepper } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
@@ -261,7 +261,7 @@ const Cart: React.ReactNode = ({ userShippingInfo }) => {
                   </TableContainer>
                 </Grid>
               )}
-              {isShipmentConfirmed && !iscConfirmOrder && (
+              {!isCheckout && isShipmentConfirmed && !iscConfirmOrder && (
                 <AccountProfileDetails userShippingInfo={userShippingInfo} />
               )}
               <Grid item md={12} xs={12}>
@@ -325,7 +325,14 @@ const Cart: React.ReactNode = ({ userShippingInfo }) => {
             </Grid>
           )}
           <>
-            {isError && <Alert severity="error">{error}</Alert>}
+            {isError && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="error">
+                  <AlertTitle>Error</AlertTitle>
+                  {error}
+                </Alert>
+              </Stack>
+            )}
             {!isError && order && <Review order={order} />}
           </>
         </Box>

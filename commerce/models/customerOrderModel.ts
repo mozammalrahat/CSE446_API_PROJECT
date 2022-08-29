@@ -38,6 +38,15 @@ const customerOrderSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  delivered: {
+    type: Boolean,
+    default: false,
+  },
+  status: {
+    type: String,
+    enum: ["accepted", "rejected", "pending"],
+    default: "pending",
+  },
 });
 
 export default mongoose.models.CustomerOrder ||

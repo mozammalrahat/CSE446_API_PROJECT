@@ -14,68 +14,44 @@ import {
 } from "@mui/material";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-
-const products = [
-  {
-    id: uuid(),
-    name: "Dropbox",
-    imageUrl: "/static/images/products/product_1.png",
-    updatedAt: subHours(Date.now(), 2),
-  },
-  {
-    id: uuid(),
-    name: "Medium Corporation",
-    imageUrl: "/static/images/products/product_2.png",
-    updatedAt: subHours(Date.now(), 2),
-  },
-  {
-    id: uuid(),
-    name: "Slack",
-    imageUrl: "/static/images/products/product_3.png",
-    updatedAt: subHours(Date.now(), 3),
-  },
-  {
-    id: uuid(),
-    name: "Lyft",
-    imageUrl: "/static/images/products/product_4.png",
-    updatedAt: subHours(Date.now(), 5),
-  },
-  {
-    id: uuid(),
-    name: "GitHub",
-    imageUrl: "/static/images/products/product_5.png",
-    updatedAt: subHours(Date.now(), 9),
-  },
-];
+import Link from "next/link";
+import MuiLink from "@mui/material/Link";
 
 export const LatestProducts = ({ recentProducts }) => (
   <Card>
     <CardHeader
       subtitle={`${recentProducts.length} in total`}
-      title="Latest Products"
+      title="Recent Products"
     />
     <Divider />
     <List>
       {recentProducts.map((product, i) => (
-        <ListItem divider={i < recentProducts.length - 1} key={product._id}>
-          {/* <ListItemAvatar>
-            <img
-              alt={product.name}
-              src={product.imageUrl}
-              style={{
-                height: 48,
-                width: 48,
-              }}
-            />
-          </ListItemAvatar> */}
-          <ListItemText
-            primary={product._id}
-            // secondary={`Updated ${formatDistanceToNow(product.updatedAt)}`}
-          />
-          <IconButton edge="end" size="small">
-            <MoreVertIcon />
-          </IconButton>
-        </ListItem>
+        <MuiLink underline="hover">
+          <Link href={`/product/${product.productId._id}`} passHref>
+            <a>
+              <ListItem
+                divider={i < recentProducts.length - 1}
+                key={product._id}
+              >
+                <ListItemAvatar>
+                  <img
+                    alt={product.productId.name}
+                    src={product.productId.image}
+                    style={{
+                      height: 48,
+                      width: 48,
+                    }}
+                  />
+                </ListItemAvatar>
+
+                <ListItemText
+                  primary={product.productId.name}
+                  // secondary={`Updated ${formatDistanceToNow(product.updatedAt)}`}
+                />
+              </ListItem>
+            </a>
+          </Link>
+        </MuiLink>
       ))}
     </List>
     <Divider />

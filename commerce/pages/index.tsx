@@ -19,6 +19,7 @@ import { Margin } from "@mui/icons-material";
 
 const Home = ({
   products,
+  user,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   useEffect(() => {

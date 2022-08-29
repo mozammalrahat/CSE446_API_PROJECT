@@ -21,6 +21,7 @@ import { Box } from "@mui/material";
 
 const ProductDetail = ({
   product,
+  user,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const classes = useStyles();
@@ -118,14 +119,16 @@ const ProductDetail = ({
                   </Grid>
                 </ListItem>
                 <ListItem>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    onClick={addToCartHandler}
-                  >
-                    Add to cart
-                  </Button>
+                  {user.userType === "customer" && (
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      onClick={addToCartHandler}
+                    >
+                      Add to cart
+                    </Button>
+                  )}
                 </ListItem>
               </List>
             </Card>

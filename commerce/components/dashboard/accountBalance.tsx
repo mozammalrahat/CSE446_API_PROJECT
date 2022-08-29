@@ -1,13 +1,13 @@
 import { Avatar, Card, CardContent, Grid, Typography } from "@mui/material";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
-export const AccountBalance = ({ bankInformation }) => (
+export const AccountBalance = ({ user, bankInformation }) => (
   <Card>
     <CardContent>
       <Grid container spacing={3} sx={{ justifyContent: "space-between" }}>
         <Grid item>
           <Typography color="textSecondary" gutterBottom variant="overline">
-            My Account
+            {user.userType === "customer" ? "My Account" : "Ecommerce Balance"}
           </Typography>
           <Typography color="textPrimary" variant="h5">
             ${bankInformation.balance}

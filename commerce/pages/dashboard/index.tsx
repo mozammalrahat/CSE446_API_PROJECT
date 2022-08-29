@@ -13,10 +13,13 @@ import axios from "axios";
 import { parseCookies } from "nookies";
 import { AccountBalance } from "../../components/dashboard/accountBalance";
 
-const Dashboard = ({ orders, bankInformation }) => {
+const Dashboard = ({ orders, bankInformation, user }) => {
   let totalCost = 0;
   let totalProductOrdered = 0;
-  let recentProducts = orders[0].products;
+  let recentProducts;
+  if (orders[0] !== undefined) recentProducts = orders[0].products;
+  console.log("Recent Products are: ", recentProducts);
+
   orders.forEach((order) => {
     totalCost += order.totalPrice;
     order.products.forEach((p) => {
@@ -31,8 +34,9 @@ const Dashboard = ({ orders, bankInformation }) => {
   return (
     <>
       <Head>
-        <title>Dashboard | Material Kit</title>
+        <title>Dashboard</title>
       </Head>
+      <br />
       <Box
         component="main"
         sx={{
@@ -53,24 +57,27 @@ const Dashboard = ({ orders, bankInformation }) => {
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <AccountBalance
+                user={user}
                 bankInformation={bankInformation}
                 sx={{ height: "100%" }}
               />
             </Grid>
-            <Grid item lg={8} md={12} xl={9} xs={12}>
+            {/* <Grid item lg={8} md={12} xl={9} xs={12}>
               <Sales />
             </Grid>
             <Grid item lg={4} md={6} xl={3} xs={12}>
               <TrafficByDevice sx={{ height: "100%" }} />
-            </Grid>
+            </Grid> */}
             <Grid item lg={4} md={6} xl={3} xs={12}>
-              <LatestProducts
-                recentProducts={recentProducts}
-                sx={{ height: "100%" }}
-              />
+              {orders[0] !== undefined && (
+                <LatestProducts
+                  recentProducts={recentProducts}
+                  sx={{ height: "100%" }}
+                />
+              )}
             </Grid>
-            <Grid item lg={8} md={12} xl={9} xs={12}>
-              <LatestOrders orders={orders} />
+            <Grid item lg={12} md={12} xl={9} xs={12}>
+              <LatestOrders user={user} allOrders={orders} />
             </Grid>
           </Grid>
         </Container>
@@ -84,25 +91,40 @@ export default Dashboard;
 
 export async function getServerSideProps(context) {
   const { token } = parseCookies(context);
-  const orderResponse = await axios.get("http://localhost:3000/api/order", {
+  let userResponse;
+  let user;
+  let orderResponse;
+  let shippingResponse;
+  let account;
+  let bankResponse;
+  userResponse = await axios.get("http://localhost:3000/api/user", {
     headers: { Authorization: token },
   });
-  const shippingResponse = await axios.get(
-    "http://localhost:3000/api/shipping",
-    {
+  user = userResponse.data.user;
+  if (user.userType === "customer") {
+    orderResponse = await axios.get("http://localhost:3000/api/order", {
       headers: { Authorization: token },
-    }
-  );
-  // console.log(shippingResponse.data);
-  const account = shippingResponse.data.userShipping.account;
-  const bankResponse = await axios.get(
-    `http://localhost:3001/bank/accounts/${account}`,
-    {}
-  );
-  console.log(bankResponse.data);
+    });
+    shippingResponse = await axios.get("http://localhost:3000/api/shipping", {
+      headers: { Authorization: token },
+    });
+    account = shippingResponse.data.userShipping.account;
+    bankResponse = await axios.get(
+      `http://localhost:3001/bank/accounts/${account}`,
+      {}
+    );
+  } else {
+    orderResponse = await axios.get("http://localhost:3000/api/orders", {
+      headers: { Authorization: token },
+    });
+    bankResponse = await axios.get(
+      `http://localhost:3001/bank/accounts/${process.env.ecommerce_account}`,
+      {}
+    );
+  }
   return {
     props: {
-      orders: orderResponse.data.orderList,
+      orders: orderResponse.data.orders,
       bankInformation: bankResponse.data.accountDetails,
     },
   };
