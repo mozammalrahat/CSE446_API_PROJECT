@@ -61,7 +61,6 @@ const ProductDetail = ({
 
   return (
     <Box paddingTop="80px">
-      <Navbar title={product.name} description={product.description}>
         <div className={classes.section}>
           <NextLink href="/" passHref>
             <Link></Link>
@@ -134,7 +133,6 @@ const ProductDetail = ({
             </Card>
           </Grid>
         </Grid>
-      </Navbar>
     </Box>
   );
 };

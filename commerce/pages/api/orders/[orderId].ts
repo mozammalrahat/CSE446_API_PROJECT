@@ -37,19 +37,23 @@ export default async function handler(
   }
   if (req.method === "PUT") {
     console.log("Parameters : ", req.query);
-    const action = req.query.action
-    const orderId = req.query.orderId
+    const action = req.query.action;
+    const orderId = req.query.orderId;
     let update = {};
-    if(action==="accept"){
-      update.status="accepted"
+    if (action === "accept") {
+      update.status = "accepted";
     }
-    if(action==="reject"){
-      update.status = "rejected"
+    if (action === "reject") {
+      update.status = "rejected";
     }
-    if(action==="delivered"){
-      update.delivered = true
+    if (action === "delivered") {
+      update.delivered = true;
     }
-    let order = await CustomerOrderModel.findOneAndUpdate({ _id: orderId }, update,{new:true});
-    return res.status(200).json({order})
+    let order = await CustomerOrderModel.findOneAndUpdate(
+      { _id: orderId },
+      update,
+      { new: true }
+    );
+    return res.status(200).json({ order });
   }
 }

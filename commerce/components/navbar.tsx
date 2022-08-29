@@ -19,11 +19,15 @@ import cookie from "js-cookie";
 import { useRouter } from "next/router";
 import MuiLink from "@mui/material/Link";
 import useStyles from "../utils/styles";
+import StickyFooter from "./footer";
 const Header = ({ title, description, children }) => {
   const router = useRouter();
   const [value, setValue] = useState(0);
   const theme = useTheme();
   const classes = useStyles();
+  const handleChange = (newValue) => {
+    setValue(newValue);
+  };
 
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
   console.log(isMatch);
@@ -54,62 +58,66 @@ const Header = ({ title, description, children }) => {
             </>
           ) : (
             <>
-              <Tabs sx={{ marginLeft: "30px", marginTop: "10px" }}>
+              <Tabs
+                // value={value}
+                // indicatorColor="secondary"
+                sx={{ marginLeft: "30px", marginTop: "10px" }}
+              >
                 <Link href="/dashboard">
                   <Tab
+                    value={0}
                     label="Dashboard"
                     sx={{
                       fontSize: "22px",
                       fontWeight: "bold",
-                      backgroundColor: "black",
-                      color: "#f8f5dbed",
                       fontFamily: "Georgia",
                     }}
+                    //   onChange={(e, value) => handleChange(e, value)}
+                    //
                   />
                 </Link>
               </Tabs>
 
               <Tabs
-                sx={{ marginLeft: "auto" }}
-                indicatorColor="secondary"
-                textColor="inherit"
                 value={value}
-                onChange={(e, value) => setValue(value)}
+                indicatorColor="secondary"
+                sx={{ marginLeft: "auto" }}
+                textColor="inherit"
               >
                 <Link href="/">
                   <Tab
+                    value={1}
                     label="Products"
                     sx={{
                       fontSize: "20px",
                       fontWeight: "bold",
-                      backgroundColor: "black",
-                      color: "#f8f5dbed",
                       fontFamily: "Georgia",
                     }}
+                    onChange={(value) => handleChange(value)}
                   />
                 </Link>
                 <Link href="/cart">
                   <Tab
+                    value={2}
                     label="Cart"
                     sx={{
                       fontSize: "20px",
                       fontWeight: "bold",
-                      backgroundColor: "black",
-                      color: "#f8f5dbed",
                       fontFamily: "Georgia",
                     }}
+                    onChange={(value) => handleChange(value)}
                   />
                 </Link>
                 <Link href="/account">
                   <Tab
+                    value={3}
                     label="Profile"
                     sx={{
                       fontSize: "20px",
                       fontWeight: "bold",
-                      backgroundColor: "black",
-                      color: "#f8f5dbed",
                       fontFamily: "Georgia",
                     }}
+                    onChange={(value) => handleChange(value)}
                   />
                 </Link>
               </Tabs>
@@ -144,9 +152,7 @@ const Header = ({ title, description, children }) => {
         </Toolbar>
       </AppBar>
       <Container>{children!}</Container>
-      <footer className={classes.footer}>
-        <Typography>This is a simple API project for course CSE446</Typography>
-      </footer>
+      <StickyFooter />
     </React.Fragment>
   );
 };
