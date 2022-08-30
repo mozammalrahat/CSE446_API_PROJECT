@@ -26,9 +26,6 @@ const Header = ({ title, description, children }) => {
   const [value, setValue] = useState(0);
   const theme = useTheme();
   const classes = useStyles();
-  const handleChange = (newValue) => {
-    setValue(newValue);
-  };
 
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
   console.log(isMatch);
@@ -79,46 +76,35 @@ const Header = ({ title, description, children }) => {
                 </Link>
               </Tabs>
 
-              <Tabs
-                value={value}
-                indicatorColor="secondary"
-                sx={{ marginLeft: "auto" }}
-                textColor="inherit"
-              >
+              <Tabs sx={{ marginLeft: "auto" }} textColor="inherit">
                 <Link href="/">
                   <Tab
-                    value={1}
                     label="Products"
                     sx={{
                       fontSize: "20px",
                       fontWeight: "bold",
                       fontFamily: "Georgia",
                     }}
-                    onChange={(value) => handleChange(value)}
                   />
                 </Link>
                 <Link href="/cart">
                   <Tab
-                    value={2}
                     label="Cart"
                     sx={{
                       fontSize: "20px",
                       fontWeight: "bold",
                       fontFamily: "Georgia",
                     }}
-                    onChange={(value) => handleChange(value)}
                   />
                 </Link>
                 <Link href="/account">
                   <Tab
-                    value={3}
                     label="Profile"
                     sx={{
                       fontSize: "20px",
                       fontWeight: "bold",
                       fontFamily: "Georgia",
                     }}
-                    onChange={(value) => handleChange(value)}
                   />
                 </Link>
               </Tabs>

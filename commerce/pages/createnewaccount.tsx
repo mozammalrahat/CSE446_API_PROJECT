@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PerfectScrollbar from "react-perfect-scrollbar";
 import {
   Alert,
   Box,
@@ -8,6 +9,13 @@ import {
   CardHeader,
   Divider,
   TextField,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+  Tooltip,
 } from "@mui/material";
 import axios from "axios";
 import cookie from "js-cookie";
@@ -33,16 +41,11 @@ const CreateNewAccount = () => {
   const handleNewAccount = async () => {
     await axios
       .post(
-        "http://localhost:3001/bank/create_account",
+        "http://localhost:3001/bank/account",
         {
           ...values,
         },
-        {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Request-Headers": "Content-Type, Authorization",
-          },
-        }
+        {}
       )
       .then((response) => {
         console.log(response.data);
@@ -60,8 +63,8 @@ const CreateNewAccount = () => {
         <Card>
           <CardHeader
             style={{ textAlign: "center" }}
-            subheader="Update password"
-            title="Create A New Bank Account"
+            subheader="Create A New Bank Account"
+            title="New Account"
           />
           <Divider />
           <CardContent>
@@ -107,17 +110,64 @@ const CreateNewAccount = () => {
               p: 2,
             }}
           >
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={() => handleNewAccount()}
-            >
-              Create
-            </Button>
+            {!isAccountCreated ? (
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => handleNewAccount()}
+              >
+                Create
+              </Button>
+            ) : (
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => window.location.reload()}
+              >
+                Create Another Account
+              </Button>
+            )}
             <Box></Box>
           </Box>
         </Card>
       </form>
+
+      {isAccountCreated && (
+        <Card>
+          <CardHeader title="Account Details" />
+          <PerfectScrollbar>
+            <Box sx={{ minWidth: 600 }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Account Name</TableCell>
+                    <TableCell>Account NO.</TableCell>
+                    <TableCell>Balance</TableCell>
+                    <TableCell>Security Code </TableCell>
+                    <TableCell>User Mail</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow hover>
+                    <TableCell>{values.name}</TableCell>
+                    <TableCell>{account.accountNumber}</TableCell>
+                    <TableCell>{account.balance}</TableCell>
+                    <TableCell>{account.bank_secret}</TableCell>
+                    <TableCell>{account.email}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </Box>
+          </PerfectScrollbar>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              p: 2,
+            }}
+          ></Box>
+        </Card>
+      )}
     </>
   );
 };

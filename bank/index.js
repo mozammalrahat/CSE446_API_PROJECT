@@ -8,10 +8,14 @@ const port = 3001;
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 const generator = require("generate-password");
-
+const cors = require("cors");
 const connectDb = require("./connectDB");
 connectDb();
-
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.get("/bank/accounts", (req, res) => {
   Account.find()
     .then((accounts) => {
@@ -53,7 +57,7 @@ app.get("/bank/transactions", (req, res) => {
     });
 });
 
-app.post("/bank/create_account", async (req, res) => {
+app.post("/bank/account", async (req, res) => {
   const bank_secret = generator.generate({
     length: 8,
     numbers: true,

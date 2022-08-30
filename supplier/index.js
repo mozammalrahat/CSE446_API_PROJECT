@@ -4,10 +4,16 @@ require("dotenv").config({ path: "./config.env" });
 const Product = require("./models/product");
 const connectDB = require("./connectDB");
 const axios = require("axios");
+const cors = require("cors");
 connectDB();
 const app = express();
 app.use(express.json());
 port = 3002;
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
@@ -52,8 +58,8 @@ app.post("/order", async (req, res) => {
     }
   }
 });
-app.post("/create_product", async (req, res) => {
-  const product = req.body.product;
+app.post("/product", async (req, res) => {
+  const product = req.body;
   const newproduct = new Product({
     name: product.name,
     key: product.key,

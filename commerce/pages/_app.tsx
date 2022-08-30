@@ -66,7 +66,7 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
     console.log(this.props.router.pathname);
     const pathname = this.props.router.pathname;
-    if (pathname === "/createnewaccount") {
+    if (pathname === "/createnewaccount" || pathname === "/addproduct") {
       return (
         <>
           <Component {...pageProps} />
