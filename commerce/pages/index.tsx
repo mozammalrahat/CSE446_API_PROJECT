@@ -43,7 +43,11 @@ const Home = ({
     <>
       <h1>Products</h1>
       <br />
-      <Grid container spacing={3}>
+      <Grid
+        container
+        spacing={3}
+        style={{ marginBottom: "150px", marginTop: "20px" }}
+      >
         {products.map((product) => (
           <Grid item md={4} key={product.name}>
             <NextLink href={`/product/${product._id}`} passHref>
