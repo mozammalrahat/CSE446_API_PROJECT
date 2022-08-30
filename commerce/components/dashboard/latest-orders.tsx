@@ -45,12 +45,15 @@ export const LatestOrders = ({ allOrders, user }) => {
 
   useEffect(() => {
     const getAllOrders = async () => {
-      const ordersResponse = await axios.get(
-        "http://localhost:3000/api/orders",
-        {
-          headers: { Authorization: cookie.get("token") },
-        }
-      );
+      let url;
+      if (user.userType === "admin") {
+        url = "http://localhost:3000/api/orders";
+      } else {
+        url = "http://localhost:3000/api/order";
+      }
+      const ordersResponse = await axios.get(url, {
+        headers: { Authorization: cookie.get("token") },
+      });
       setOrders((prev) => ordersResponse.data.orders);
     };
     getAllOrders();
@@ -91,10 +94,10 @@ export const LatestOrders = ({ allOrders, user }) => {
                     <Link href={`/dashboard/vieworder/${order._id}`}>
                       <a target="_blank" rel="noopener noreferrer">
                         <Button
-                         style={{
-                          color: "#f8f5dbed",
-                          backgroundColor: "black",
-                        }}
+                          style={{
+                            color: "#f8f5dbed",
+                            backgroundColor: "black",
+                          }}
                           size="small"
                           variant="contained"
                           // onClick={() => handleOrderView(order._id)}
@@ -111,7 +114,6 @@ export const LatestOrders = ({ allOrders, user }) => {
                           onClick={() => handleStatus(order._id, "accept")}
                           size="small"
                           variant="contained"
-                          
                         >
                           Accept
                         </Button>

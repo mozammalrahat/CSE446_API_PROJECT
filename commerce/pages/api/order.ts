@@ -116,6 +116,7 @@ export default async function handler(
     const orders = await CustomerOrderModel.find({ user: userId })
       .populate({ path: "products.productId", model: Product })
       .populate({ path: "shippingInfo", model: userShippingModel });
+
     if (!orders) {
       return res.status(404).send(`User order not found`);
     }

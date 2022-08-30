@@ -14,6 +14,7 @@ import { parseCookies } from "nookies";
 import { AccountBalance } from "../../components/dashboard/accountBalance";
 
 const Dashboard = ({ orders, bankInformation, user }) => {
+  console.log("Orders from dashboard/index", orders)
   let totalCost = 0;
   let totalProductOrdered = 0;
   let recentProducts;
@@ -113,7 +114,8 @@ export async function getServerSideProps(context) {
       `http://localhost:3001/bank/accounts/${account}`,
       {}
     );
-  } else {
+  }
+  if (user.userType === "admin") {
     orderResponse = await axios.get("http://localhost:3000/api/orders", {
       headers: { Authorization: token },
     });
