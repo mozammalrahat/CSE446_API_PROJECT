@@ -286,7 +286,7 @@ const Cart: React.ReactNode = ({ userShippingInfo }) => {
                       </ListItem>
                     )}
                     {isShipmentConfirmed && !isCheckout && (
-                      <ListItem>
+                      <ListItem style={{ marginBottom: "90px" }}>
                         <Button
                           style={{
                             color: "#f8f5dbed",
